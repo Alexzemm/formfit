@@ -1,0 +1,432 @@
+import customtkinter as ctk
+import cv2
+import torch
+import numpy as np
+import mediapipe as mp
+from PIL import Image, ImageTk
+import threading
+import time
+from collections import Counter
+import sys
+import os
+
+# Add the folders to Python path
+sys.path.append(os.path.join(os.getcwd(), 'squats'))
+sys.path.append(os.path.join(os.getcwd(), 'pushups'))
+
+# Import the trainer module from both folders
+try:
+    from squats.trainer import PoseTransformer as SquatTransformer
+    from pushups.trainer import PoseTransformer as PushupTransformer
+except ImportError:
+    # Fallback if trainer is in the same directory structure
+    from trainer import PoseTransformer as SquatTransformer
+    from trainer import PoseTransformer as PushupTransformer
+
+# Configure customtkinter
+ctk.set_appearance_mode("dark")
+ctk.set_default_color_theme("blue")
+
+class FitnessTrainerApp:
+    def __init__(self):
+        self.root = ctk.CTk()
+        self.root.title("AI Fitness Trainer")
+        self.root.geometry("1200x800")
+        
+        # Exercise configurations
+        self.exercises = {
+            "pushups": {
+                "name": "Push-ups",
+                "model_path": "pushups/pushup_transformer.pth",
+                "classes": ['correct', 'pike', 'snake'],
+                "colors": {
+                    'correct': (0, 255, 0),
+                    'pike': (0, 0, 255),
+                    'snake': (255, 0, 0)
+                }
+            },
+            "squats": {
+                "name": "Squats",
+                "model_path": "squats/squat_transformer.pth", 
+                "classes": ['correct', 'knees_in'],
+                "colors": {
+                    'correct': (0, 255, 0),
+                    'knees_in': (0, 0, 255)
+                }
+            }
+        }
+        
+        # Initialize variables
+        self.selected_exercise = None
+        self.model = None
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.pose = None
+        self.cap = None
+        self.is_evaluating = False
+        self.sequence = []
+        self.seq_len = 30
+        self.predictions = []
+        self.start_time = None
+        self.frame_count = 0
+        
+        # Setup MediaPipe
+        self.mp_pose = mp.solutions.pose
+        
+        self.setup_ui()
+        
+    def setup_ui(self):
+        # Main container
+        main_frame = ctk.CTkFrame(self.root)
+        main_frame.pack(fill="both", expand=True, padx=20, pady=20)
+        
+        # Title
+        title_label = ctk.CTkLabel(
+            main_frame, 
+            text="AI Fitness Trainer", 
+            font=ctk.CTkFont(size=32, weight="bold")
+        )
+        title_label.pack(pady=20)
+        
+        # Exercise selection frame
+        selection_frame = ctk.CTkFrame(main_frame)
+        selection_frame.pack(pady=20, padx=50, fill="x")
+        
+        selection_label = ctk.CTkLabel(
+            selection_frame,
+            text="Select Exercise:",
+            font=ctk.CTkFont(size=18, weight="bold")
+        )
+        selection_label.pack(pady=10)
+        
+        # Exercise buttons
+        button_frame = ctk.CTkFrame(selection_frame)
+        button_frame.pack(pady=10)
+        
+        self.pushup_btn = ctk.CTkButton(
+            button_frame,
+            text="Push-ups",
+            width=150,
+            height=60,
+            font=ctk.CTkFont(size=16),
+            command=lambda: self.select_exercise("pushups")
+        )
+        self.pushup_btn.pack(side="left", padx=20)
+        
+        self.squat_btn = ctk.CTkButton(
+            button_frame,
+            text="Squats", 
+            width=150,
+            height=60,
+            font=ctk.CTkFont(size=16),
+            command=lambda: self.select_exercise("squats")
+        )
+        self.squat_btn.pack(side="right", padx=20)
+        
+        # Selected exercise display
+        self.selected_label = ctk.CTkLabel(
+            selection_frame,
+            text="No exercise selected",
+            font=ctk.CTkFont(size=14)
+        )
+        self.selected_label.pack(pady=10)
+        
+        # Control buttons frame
+        control_frame = ctk.CTkFrame(main_frame)
+        control_frame.pack(pady=20, fill="x", padx=50)
+        
+        self.start_btn = ctk.CTkButton(
+            control_frame,
+            text="Start Evaluation",
+            width=200,
+            height=50,
+            font=ctk.CTkFont(size=16),
+            command=self.start_evaluation,
+            state="disabled"
+        )
+        self.start_btn.pack(side="left", padx=20)
+        
+        self.stop_btn = ctk.CTkButton(
+            control_frame,
+            text="Stop Evaluation",
+            width=200,
+            height=50,
+            font=ctk.CTkFont(size=16),
+            command=self.stop_evaluation,
+            state="disabled"
+        )
+        self.stop_btn.pack(side="right", padx=20)
+        
+        # Status frame
+        self.status_frame = ctk.CTkFrame(main_frame)
+        self.status_frame.pack(pady=20, fill="x", padx=50)
+        
+        self.status_label = ctk.CTkLabel(
+            self.status_frame,
+            text="Status: Ready",
+            font=ctk.CTkFont(size=14)
+        )
+        self.status_label.pack(pady=10)
+        
+        # Benchmarks frame
+        self.benchmark_frame = ctk.CTkFrame(main_frame)
+        self.benchmark_frame.pack(pady=20, fill="both", expand=True, padx=50)
+        
+        benchmark_title = ctk.CTkLabel(
+            self.benchmark_frame,
+            text="Session Benchmarks",
+            font=ctk.CTkFont(size=18, weight="bold")
+        )
+        benchmark_title.pack(pady=10)
+        
+        self.benchmark_text = ctk.CTkTextbox(
+            self.benchmark_frame,
+            height=200,
+            font=ctk.CTkFont(size=12)
+        )
+        self.benchmark_text.pack(fill="both", expand=True, padx=20, pady=10)
+        
+    def select_exercise(self, exercise_key):
+        self.selected_exercise = exercise_key
+        exercise_name = self.exercises[exercise_key]["name"]
+        self.selected_label.configure(text=f"Selected: {exercise_name}")
+        self.start_btn.configure(state="normal")
+        
+        # Update button colors to show selection
+        if exercise_key == "pushups":
+            self.pushup_btn.configure(fg_color="green")
+            self.squat_btn.configure(fg_color=["#3B8ED0", "#1F6AA5"])
+        else:
+            self.squat_btn.configure(fg_color="green") 
+            self.pushup_btn.configure(fg_color=["#3B8ED0", "#1F6AA5"])
+    
+    def load_model(self):
+        try:
+            exercise_config = self.exercises[self.selected_exercise]
+            num_classes = len(exercise_config["classes"])
+            
+            # Use appropriate transformer class
+            if self.selected_exercise == "pushups":
+                self.model = PushupTransformer(num_classes=num_classes)
+            else:
+                self.model = SquatTransformer(num_classes=num_classes)
+            
+            self.model.load_state_dict(torch.load(
+                exercise_config["model_path"], 
+                map_location=self.device
+            ))
+            self.model.to(self.device)
+            self.model.eval()
+            
+            return True
+            
+        except Exception as e:
+            self.status_label.configure(text=f"Error loading model: {str(e)}")
+            return False
+    
+    def extract_keypoints(self, frame):
+        image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.pose.process(image_rgb)
+        if results.pose_landmarks:
+            keypoints = []
+            for lm in results.pose_landmarks.landmark:
+                keypoints.extend([lm.x, lm.y, lm.z])
+            return np.array(keypoints, dtype=np.float32)
+        else:
+            return np.zeros(33*3, dtype=np.float32)
+    
+    def start_evaluation(self):
+        if not self.selected_exercise:
+            return
+        
+        # Load model
+        if not self.load_model():
+            return
+        
+        # Initialize MediaPipe pose
+        self.pose = self.mp_pose.Pose(
+            static_image_mode=False, 
+            min_detection_confidence=0.5
+        )
+        
+        # Initialize camera
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1200)
+        
+        # Reset tracking variables
+        self.sequence = []
+        self.predictions = []
+        self.start_time = time.time()
+        self.frame_count = 0
+        self.is_evaluating = True
+        
+        # Update UI
+        self.start_btn.configure(state="disabled")
+        self.stop_btn.configure(state="normal")
+        self.status_label.configure(text="Status: Evaluating...")
+        self.benchmark_text.delete("1.0", "end")
+        
+        # Start evaluation thread
+        self.eval_thread = threading.Thread(target=self.evaluation_loop)
+        self.eval_thread.daemon = True
+        self.eval_thread.start()
+    
+    def evaluation_loop(self):
+        exercise_config = self.exercises[self.selected_exercise]
+        classes = exercise_config["classes"]
+        colors = exercise_config["colors"]
+        
+        while self.is_evaluating:
+            ret, frame = self.cap.read()
+            if not ret:
+                break
+            
+            # Flip frame horizontally to fix mirror effect
+            frame = cv2.flip(frame, 1)
+            
+            self.frame_count += 1
+            keypoints = self.extract_keypoints(frame)
+            self.sequence.append(keypoints)
+            
+            if len(self.sequence) > self.seq_len:
+                self.sequence.pop(0)
+            
+            # Predict if we have enough frames
+            if len(self.sequence) == self.seq_len:
+                input_seq = torch.tensor(
+                    np.array(self.sequence), 
+                    dtype=torch.float32
+                ).unsqueeze(0).to(self.device)
+                
+                with torch.no_grad():
+                    output = self.model(input_seq)
+                    pred_class = classes[torch.argmax(output, 1).item()]
+                    confidence = torch.softmax(output, dim=1).max().item()
+                
+                self.predictions.append(pred_class)
+                color = colors.get(pred_class, (0, 0, 255))
+                
+                # Draw prediction on frame
+                cv2.putText(
+                    frame, 
+                    f"Prediction: {pred_class} ({confidence:.2f})",
+                    (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 
+                    1, 
+                    color, 
+                    2
+                )
+                
+                # Draw frame count
+                cv2.putText(
+                    frame,
+                    f"Frames: {self.frame_count}",
+                    (10, 70),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (255, 255, 255),
+                    2
+                )
+            
+            cv2.namedWindow(f"{exercise_config['name']} Pose Classifier", cv2.WINDOW_NORMAL)
+            cv2.setWindowProperty(
+                f"{exercise_config['name']} Pose Classifier", 
+                cv2.WND_PROP_FULLSCREEN, 
+                cv2.WINDOW_FULLSCREEN
+            )
+            
+            cv2.imshow(f"{exercise_config['name']} Pose Classifier", frame)
+            
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                self.stop_evaluation()
+                break
+    
+    def stop_evaluation(self):
+        self.is_evaluating = False
+        
+        if self.cap:
+            self.cap.release()
+        if self.pose:
+            self.pose.close()
+        
+        cv2.destroyAllWindows()
+        
+        # Update UI
+        self.start_btn.configure(state="normal")
+        self.stop_btn.configure(state="disabled")
+        self.status_label.configure(text="Status: Evaluation Complete")
+        
+        # Show benchmarks
+        self.show_benchmarks()
+    
+    def show_benchmarks(self):
+        if not self.predictions:
+            self.benchmark_text.insert("end", "No predictions recorded.\n")
+            return
+        
+        end_time = time.time()
+        total_time = end_time - self.start_time
+        
+        # Calculate statistics
+        prediction_counts = Counter(self.predictions)
+        total_predictions = len(self.predictions)
+        fps = self.frame_count / total_time if total_time > 0 else 0
+        
+        # Generate benchmark report
+        report = f"SESSION BENCHMARK REPORT\n"
+        report += f"=" * 50 + "\n\n"
+        report += f"Exercise: {self.exercises[self.selected_exercise]['name']}\n"
+        report += f"Total Duration: {total_time:.2f} seconds\n"
+        report += f"Total Frames Processed: {self.frame_count}\n"
+        report += f"Average FPS: {fps:.2f}\n"
+        report += f"Total Predictions Made: {total_predictions}\n\n"
+        
+        report += "FORM ANALYSIS:\n"
+        report += "-" * 30 + "\n"
+        
+        for class_name, count in prediction_counts.items():
+            percentage = (count / total_predictions) * 100
+            report += f"{class_name.title()}: {count} predictions ({percentage:.1f}%)\n"
+        
+        # Performance rating
+        correct_percentage = (prediction_counts.get('correct', 0) / total_predictions) * 100
+        report += f"\nOVERALL FORM SCORE: {correct_percentage:.1f}%\n"
+        
+        if correct_percentage >= 80:
+            rating = "Excellent! 🏆"
+        elif correct_percentage >= 60:
+            rating = "Good! Keep improving! 👍"
+        elif correct_percentage >= 40:
+            rating = "Fair. Focus on form! ⚠️"
+        else:
+            rating = "Needs improvement. Practice more! 📈"
+        
+        report += f"Rating: {rating}\n\n"
+        
+        # Recommendations
+        report += "RECOMMENDATIONS:\n"
+        report += "-" * 30 + "\n"
+        
+        if self.selected_exercise == "pushups":
+            if prediction_counts.get('pike', 0) > prediction_counts.get('correct', 0):
+                report += "• Keep your body straight - avoid piking up\n"
+            if prediction_counts.get('snake', 0) > prediction_counts.get('correct', 0):
+                report += "• Engage your core to prevent sagging\n"
+        else:  # squats
+            if prediction_counts.get('knees_in', 0) > prediction_counts.get('correct', 0):
+                report += "• Keep your knees aligned with your toes\n"
+                report += "• Focus on pushing knees outward\n"
+        
+        if correct_percentage < 80:
+            report += "• Practice the movement slowly to build muscle memory\n"
+            report += "• Consider working with a trainer for personalized guidance\n"
+        
+        self.benchmark_text.delete("1.0", "end")
+        self.benchmark_text.insert("end", report)
+    
+    def run(self):
+        self.root.mainloop()
+
+if __name__ == "__main__":
+    app = FitnessTrainerApp()
+    app.run()

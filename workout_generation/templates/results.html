@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+
+{% block title %}Plans for {{ user_info.name }}{% endblock %}
+
+{% block content %}
+<h1>📋 Personalized Plans for {{ user_info.name }}</h1>
+
+<div style="display: flex; gap: 20px; margin: 20px 0;">
+    <button onclick="showTab('summary')" id="summaryTab" class="tab-btn active" style="flex: 1;">📊 Summary</button>
+    <button onclick="showTab('workout')" id="workoutTab" class="tab-btn" style="flex: 1;">🏋️ Workout Plan</button>
+    <button onclick="showTab('diet')" id="dietTab" class="tab-btn" style="flex: 1;">🥗 Diet Plan</button>
+</div>
+
+<div id="summaryContent" class="tab-content">
+    <div class="section">
+        <h2>User Profile Summary</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3 style="color: #5a67d8; margin-bottom: 10px;">Personal Information</h3>
+                <p><strong>Name:</strong> {{ user_info.name }}</p>
+                <p><strong>Age:</strong> {{ user_info.age }} years</p>
+                <p><strong>Gender:</strong> {{ user_info.gender }}</p>
+                <p><strong>Height:</strong> {{ user_info.height }} cm</p>
+                <p><strong>Weight:</strong> {{ user_info.weight }} kg</p>
+            </div>
+            <div>
+                <h3 style="color: #5a67d8; margin-bottom: 10px;">Fitness Goals</h3>
+                <p><strong>Primary Goal:</strong> {{ user_info.fitness_goal }}</p>
+                <p><strong>Activity Level:</strong> {{ user_info.activity_level }}</p>
+                <p><strong>Workout Frequency:</strong> {{ user_info.workout_days }} days/week</p>
+                <p><strong>Session Duration:</strong> {{ user_info.workout_duration }} minutes</p>
+                <p><strong>Location:</strong> {{ user_info.workout_location }}</p>
+            </div>
+        </div>
+        <div style="margin-top: 20px;">
+            <h3 style="color: #5a67d8; margin-bottom: 10px;">Diet Preferences</h3>
+            <p><strong>Diet Type:</strong> {{ user_info.diet_preference }}</p>
+            <p><strong>Allergies:</strong> {{ user_info.allergies or 'None specified' }}</p>
+            <p><strong>Medical Conditions:</strong> {{ user_info.medical_conditions or 'None specified' }}</p>
+        </div>
+        <p style="margin-top: 20px; text-align: center; color: #666;"><strong>Generated on:</strong> {{ timestamp }}</p>
+    </div>
+</div>
+
+<div id="workoutContent" class="tab-content" style="display: none;">
+    <div class="section">
+        <h2>Your Personalized Workout Plan</h2>
+        <div style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ workout_plan }}</div>
+    </div>
+</div>
+
+<div id="dietContent" class="tab-content" style="display: none;">
+    <div class="section">
+        <h2>Your Personalized Diet Plan</h2>
+        <div style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ diet_plan }}</div>
+    </div>
+</div>
+
+<div style="display: flex; gap: 20px; margin-top: 30px;">
+    <form method="POST" action="/save" style="flex: 1;">
+        <input type="hidden" name="workout_plan" value="{{ workout_plan }}">
+        <input type="hidden" name="diet_plan" value="{{ diet_plan }}">
+        <input type="hidden" name="name" value="{{ user_info.name }}">
+        <button type="submit" onclick="savePlans(event)" style="background: linear-gradient(135deg, #48bb78, #38a169);">💾 Save Plans</button>
+    </form>
+    <button onclick="window.location.href='/new'" style="flex: 1; background: linear-gradient(135deg, #ed8936, #dd6b20);">🔄 Generate New Plans</button>
+</div>
+
+<div id="saveStatus" class="status" style="display: none;"></div>
+{% endblock %}
+
+{% block scripts %}
+<style>
+.tab-btn {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: 2px solid #e2e8f0;
+}
+.tab-btn.active {
+    background: linear-gradient(135deg, #5a67d8, #667eea);
+    color: white;
+    border-color: #5a67d8;
+}
+.tab-content h3 {
+    color: #5a67d8;
+    margin: 15px 0 10px 0;
+}
+.tab-content p {
+    margin: 5px 0;
+    color: #4a5568;
+}
+</style>
+
+<script>
+function showTab(tabName) {
+    // Hide all content
+    document.getElementById('summaryContent').style.display = 'none';
+    document.getElementById('workoutContent').style.display = 'none';
+    document.getElementById('dietContent').style.display = 'none';
+    
+    // Remove active class from all tabs
+    document.getElementById('summaryTab').classList.remove('active');
+    document.getElementById('workoutTab').classList.remove('active');
+    document.getElementById('dietTab').classList.remove('active');
+    
+    // Show selected content and activate tab
+    document.getElementById(tabName + 'Content').style.display = 'block';
+    document.getElementById(tabName + 'Tab').classList.add('active');
+}
+
+function savePlans(event) {
+    event.preventDefault();
+    const form = event.target.closest('form');
+    const formData = new FormData(form);
+    const status = document.getElementById('saveStatus');
+    
+    fetch('/save', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        status.style.display = 'block';
+        if (data.success) {
+            status.className = 'status success';
+            status.textContent = data.success;
+        } else {
+            status.className = 'status error';
+            status.textContent = data.error;
+        }
+    })
+    .catch(error => {
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = 'Error saving files: ' + error.message;
+    });
+}
+
+// Function to format workout plans with tables
+function formatWorkoutContent() {
+    const workoutDiv = document.getElementById('workoutPlanContent');
+    const dietDiv = document.getElementById('dietPlanContent');
+    
+    if (workoutDiv) {
+        let content = workoutDiv.innerHTML;
+        
+        // Convert workout day headers (bold text with colon)
+        content = content.replace(/\*\*(.*?):\s*(.*?)\*\*/g, '<div class="workout-day-header">🏋️ $1: $2</div>');
+        
+        // More flexible table header matching
+        content = content.replace(/\|\s*Exercise\s*\|\s*Sets\s*\|\s*Reps\s*\|\s*Rest[^|]*\|/gi, 
+            '<table class="workout-table"><thead><tr><th>🏋️ Exercise</th><th>📊 Sets</th><th>🔄 Reps</th><th>⏱️ Rest</th></tr></thead><tbody>');
+        
+        // Remove table separator lines
+        content = content.replace(/\|[\s\-|]+\|/g, '');
+        
+        // Convert table rows - more flexible matching
+        content = content.replace(/\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|\s*([^|]+?)\s*\|/g, 
+            function(match, exercise, sets, reps, rest) {
+                // Clean up the values
+                exercise = exercise.trim();
+                sets = sets.trim();
+                reps = reps.trim();
+                rest = rest.trim();
+                
+                // Add "seconds" if rest is just a number
+                if (/^\d+$/.test(rest)) {
+                    rest += ' seconds';
+                }
+                
+                return `<tr><td class="exercise-name">${exercise}</td><td class="sets-reps">${sets}</td><td class="sets-reps">${reps}</td><td class="rest-time">${rest}</td></tr>`;
+            });
+        
+        // Close table tags - look for end of table rows
+        content = content.replace(/(<\/tr>)(?!\s*<tr>)/g, '$1</tbody></table>');
+        
+        // Format section headers
+        content = content.replace(/^([A-Z][^:\n]*):?\s*$/gm, '<h3 style="color: #5a67d8; margin: 25px 0 15px 0; font-size: 1.2rem;">$1</h3>');
+        
+        // Format bullet points
+        content = content.replace(/^\s*[\-\*]\s*(.+)$/gm, '<div style="margin: 8px 0; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #5a67d8;">•</span>$1</div>');
+        
+        // Format numbered lists
+        content = content.replace(/^\s*(\d+)\.\s*(.+)$/gm, '<div style="margin: 8px 0; padding-left: 25px; position: relative;"><span style="position: absolute; left: 0; color: #5a67d8; font-weight: 600;">$1.</span>$2</div>');
+        
+        // Preserve line breaks and add spacing
+        content = content.replace(/\n\n/g, '<div style="height: 15px;"></div>');
+        content = content.replace(/\n/g, '<br>');
+        
+        workoutDiv.innerHTML = content;
+    }
+    
+    if (dietDiv) {
+        let content = dietDiv.innerHTML;
+        
+        // Format meal headers
+        content = content.replace(/\*\*(.*?):\s*(.*?)\*\*/g, '<div class="workout-day-header" style="background: linear-gradient(135deg, #ed8936, #dd6b20);">🍽️ $1: $2</div>');
+        
+        // Format section headers
+        content = content.replace(/^([A-Z][^:\n]*):?\s*$/gm, '<h3 style="color: #ed8936; margin: 25px 0 15px 0; font-size: 1.2rem;">$1</h3>');
+        
+        // Format bullet points
+        content = content.replace(/^\s*[\-\*]\s*(.+)$/gm, '<div style="margin: 8px 0; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #ed8936;">•</span>$1</div>');
+        
+        // Format numbered lists
+        content = content.replace(/^\s*(\d+)\.\s*(.+)$/gm, '<div style="margin: 8px 0; padding-left: 25px; position: relative;"><span style="position: absolute; left: 0; color: #ed8936; font-weight: 600;">$1.</span>$2</div>');
+        
+        // Preserve line breaks and add spacing
+        content = content.replace(/\n\n/g, '<div style="height: 15px;"></div>');
+        content = content.replace(/\n/g, '<br>');
+        
+        dietDiv.innerHTML = content;
+    }
+}
+
+// Run formatting when page loads
+document.addEventListener('DOMContentLoaded', formatWorkoutContent);
+</script>
+{% endblock %}

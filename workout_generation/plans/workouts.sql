@@ -90,3 +90,91 @@
 -- This plan provides a solid foundation for Alex's muscle-gain journey. Remember consistency and proper nutrition are key to achieving your goals.  Listen to your body, adjust as needed, and enjoy the process!
 -- 
 
+-- Workout Plan for alex
+-- Generated on: 2025-09-17 12:29:11
+-- ================================================
+-- ## Alex's 4-Week Home Muscle Gain Workout Plan
+-- 
+-- This plan focuses on building muscle mass using bodyweight exercises and minimal equipment.  Progression is key – aim to increase reps, sets, or difficulty each week.  Remember to listen to your body and rest when needed.
+-- 
+-- **1. Weekly Workout Schedule:**
+-- 
+-- * **Monday:** Upper Body Strength
+-- * **Tuesday:** Lower Body Strength
+-- * **Wednesday:** Rest or Active Recovery (light cardio like walking or yoga)
+-- * **Thursday:** Full Body Circuit
+-- * **Friday:** Upper Body Strength
+-- * **Saturday:** Lower Body Strength
+-- * **Sunday:** Rest
+-- 
+-- 
+-- **2. Detailed Exercises:**
+-- 
+-- **A. Upper Body Strength:**
+-- 
+-- * **Push-ups:** 3 sets of as many reps as possible (AMRAP)
+-- * **Incline Push-ups (hands on elevated surface):** 3 sets of AMRAP
+-- * **Diamond Push-ups:** 3 sets of AMRAP (focus on triceps)
+-- * **Pike Push-ups (hands close, legs elevated):** 3 sets of AMRAP (focus on shoulders)
+-- * **Rows (using sturdy table or chair):** 3 sets of 10-12 reps
+-- * **Pull-ups (if accessible, otherwise substitute with negative pull-ups or Australian pull-ups):** 3 sets of AMRAP
+-- 
+-- 
+-- **B. Lower Body Strength:**
+-- 
+-- * **Squats:** 3 sets of 12-15 reps
+-- * **Lunges (alternating legs):** 3 sets of 10-12 reps per leg
+-- * **Glute Bridges:** 3 sets of 15-20 reps
+-- * **Calf Raises:** 3 sets of 15-20 reps
+-- * **Walking Lunges:** 3 sets of 10 reps per leg
+-- 
+-- 
+-- **C. Full Body Circuit:**
+-- 
+-- (Perform each exercise for 45 seconds, followed by 15 seconds rest. Complete the entire circuit 3 times.)
+-- 
+-- * Burpees
+-- * Mountain Climbers
+-- * Jumping Jacks
+-- * Plank
+-- * Squats
+-- * Push-ups
+-- 
+-- 
+-- **3. Sets, Reps, and Rest Periods:**  (See detailed exercise descriptions above)
+-- 
+-- Rest for 60-90 seconds between sets for strength exercises.  Rest periods are built into the circuit training.
+-- 
+-- 
+-- **4. Progression Plan (4 Weeks):**
+-- 
+-- * **Week 1:** Focus on proper form and completing the prescribed reps and sets.
+-- * **Week 2:** Increase reps by 2-3 on most exercises, where possible.
+-- * **Week 3:**  Increase sets to 4 for strength exercises.  Try harder variations (e.g., decline push-ups, jump squats).
+-- * **Week 4:** Increase reps again where possible. Consider adding weight using resistance bands or filled water bottles if comfortable.  Increase circuit rounds to 4.
+-- 
+-- 
+-- **5. Warm-up (5-10 minutes before each workout):**
+-- 
+-- * Light cardio, like jumping jacks, high knees, or jogging in place (2 minutes)
+-- * Dynamic stretching: arm circles, leg swings, torso twists (3 minutes)
+-- * Specific exercise warm-up:  a few reps of the first exercise of the workout with lighter weight or less intensity (5 minutes).
+-- 
+-- **Cool-down (5-10 minutes after each workout):**
+-- 
+-- * Static stretching: hold each stretch for 20-30 seconds.  Focus on major muscle groups worked (e.g., chest, back, shoulders, quads, hamstrings, calves).
+-- 
+-- 
+-- **6. Safety Tips and Modifications:**
+-- 
+-- * **Proper Form:** Focus on maintaining correct form throughout each exercise to prevent injuries. Watch videos and ensure you understand the proper technique before starting.
+-- * **Listen to your body:** Don't push yourself too hard, especially when starting. Stop if you feel any sharp pain.
+-- * **Progressive Overload:** Gradually increase the intensity or difficulty of your workouts to continue challenging your muscles and promote growth.
+-- * **Modifications:** If an exercise is too difficult, modify it to a simpler variation (e.g., knee push-ups instead of standard push-ups, incline push-ups instead of decline).
+-- * **Hydration:** Drink plenty of water throughout the day, especially before, during, and after your workouts.
+-- * **Nutrition:**  Support your muscle growth with a balanced diet rich in protein and calories.
+-- 
+-- 
+-- **Important Note:** This is a sample plan.  Adjust it based on your progress and how your body feels. Consider consulting a fitness professional or healthcare provider before starting any new workout routine.  Consistent effort and proper nutrition are crucial for achieving your muscle gain goals.
+-- 
+

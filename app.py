@@ -6,7 +6,6 @@ import mediapipe as mp
 from PIL import Image, ImageTk
 import threading
 import time
-import multiprocessing
 from collections import Counter
 import sys
 import os
@@ -16,15 +15,16 @@ sys.path.append(os.path.join(os.getcwd(), 'squats'))
 sys.path.append(os.path.join(os.getcwd(), 'pushups'))
 sys.path.append(os.path.join(os.getcwd(), 'plank'))
 
-# Import evaluate modules from each exercise folder
+# Import the trainer module from all folders
 try:
-    # Import as modules to preserve their namespaces
-    import pushups.evaluate as pushups_evaluate
-    import squats.evaluate as squats_evaluate
-    import plank.evaluate as plank_evaluate
+    from squats.trainer import PoseTransformer as SquatTransformer
+    from pushups.trainer import PoseTransformer as PushupTransformer
+    from plank.trainer import PoseTransformer as PlankTransformer
 except ImportError:
-    # Fallback if modules are in the same directory structure
-    print("Error: Could not import evaluate modules from exercise directories.")
+    # Fallback if trainer is in the same directory structure
+    from trainer import PoseTransformer as SquatTransformer
+    from trainer import PoseTransformer as PushupTransformer
+    from trainer import PoseTransformer as PlankTransformer
 
 # Configure customtkinter
 ctk.set_appearance_mode("dark")
@@ -46,6 +46,11 @@ class FitnessTrainerApp:
                     'correct': (0, 255, 0),
                     'pike': (0, 0, 255),
                     'snake': (255, 0, 0)
+                },
+                "feedback_messages": {
+                    'correct': "Perfect Form! Keep it up!",
+                    'pike': "Bring your hips down",
+                    'snake': "Bring your hips up, back straight"
                 }
             },
             "squats": {
@@ -55,6 +60,10 @@ class FitnessTrainerApp:
                 "colors": {
                     'correct': (0, 255, 0),
                     'knees_in': (0, 0, 255)
+                },
+                "feedback_messages": {
+                    'correct': "Perfect Form! Keep it up!",
+                    'knees_in': "Keep your knees aligned with your toes"
                 }
             },
             "plank": {
@@ -65,6 +74,11 @@ class FitnessTrainerApp:
                     'correct': (0, 255, 0),
                     'hips_down': (0, 0, 255),
                     'hips_up': (255, 0, 0)
+                },
+                "feedback_messages": {
+                    'correct': "Perfect Form! Keep it up!",
+                    'hips_down': "Bring your hips up",
+                    'hips_up': "Bring your hips down, back straight"
                 }
             }
         }
@@ -229,19 +243,67 @@ class FitnessTrainerApp:
             self.plank_btn.configure(fg_color="green")
     
     def load_model(self):
-        # This function is no longer needed as we'll use the evaluate modules directly
-        return True
+        try:
+            exercise_config = self.exercises[self.selected_exercise]
+            num_classes = len(exercise_config["classes"])
+            
+            # Use appropriate transformer class based on exercise
+            if self.selected_exercise == "pushups":
+                self.model = PushupTransformer(num_classes=num_classes)
+            elif self.selected_exercise == "squats":
+                self.model = SquatTransformer(num_classes=num_classes)
+            elif self.selected_exercise == "plank":
+                self.model = PlankTransformer(num_classes=num_classes)
+            
+            self.model.load_state_dict(torch.load(
+                exercise_config["model_path"], 
+                map_location=self.device
+            ))
+            self.model.to(self.device)
+            self.model.eval()
+            
+            return True
+            
+        except Exception as e:
+            self.status_label.configure(text=f"Error loading model: {str(e)}")
+            return False
     
     def extract_keypoints(self, frame):
-        # This function is no longer needed as we'll use the evaluate modules directly
-        pass
+        image_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.pose.process(image_rgb)
+        if results.pose_landmarks:
+            keypoints = []
+            for lm in results.pose_landmarks.landmark:
+                keypoints.extend([lm.x, lm.y, lm.z])
+            return np.array(keypoints, dtype=np.float32)
+        else:
+            return np.zeros(33*3, dtype=np.float32)
     
     def start_evaluation(self):
         if not self.selected_exercise:
             return
         
-        # Stop any running evaluation
-        self.stop_evaluation()
+        # Load model
+        if not self.load_model():
+            return
+        
+        # Initialize MediaPipe pose
+        self.pose = self.mp_pose.Pose(
+            static_image_mode=False, 
+            min_detection_confidence=0.5
+        )
+        
+        # Initialize camera
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1200)
+        
+        # Reset tracking variables
+        self.sequence = []
+        self.predictions = []
+        self.start_time = time.time()
+        self.frame_count = 0
+        self.is_evaluating = True
         
         # Update UI
         self.start_btn.configure(state="disabled")
@@ -249,101 +311,103 @@ class FitnessTrainerApp:
         self.status_label.configure(text="Status: Evaluating...")
         self.benchmark_text.delete("1.0", "end")
         
-        # Start the appropriate evaluation module in a separate thread
-        self.is_evaluating = True
-        self.start_time = time.time()
-        self.predictions = []
-        self.frame_count = 0
-        
+        # Start evaluation thread
         self.eval_thread = threading.Thread(target=self.evaluation_loop)
         self.eval_thread.daemon = True
         self.eval_thread.start()
     
     def evaluation_loop(self):
-        # Launch the appropriate evaluate module based on selected exercise
-        try:
-            # Set up event to stop evaluation
-            self.stop_event = threading.Event()
+        exercise_config = self.exercises[self.selected_exercise]
+        classes = exercise_config["classes"]
+        colors = exercise_config["colors"]
+        feedback_messages = exercise_config["feedback_messages"]
+        
+        while self.is_evaluating:
+            ret, frame = self.cap.read()
+            if not ret:
+                break
             
-            # Store the original stdout to restore it later
-            original_stdout = sys.stdout
+            # Flip frame horizontally to fix mirror effect
+            frame = cv2.flip(frame, 1)
             
-            # Create a custom stdout to capture predictions
-            class CustomStdout:
-                def __init__(self, app_instance):
-                    self.app_instance = app_instance
-                    self.buffer = ""
+            self.frame_count += 1
+            keypoints = self.extract_keypoints(frame)
+            self.sequence.append(keypoints)
+            
+            if len(self.sequence) > self.seq_len:
+                self.sequence.pop(0)
+            
+            # Predict if we have enough frames
+            if len(self.sequence) == self.seq_len:
+                input_seq = torch.tensor(
+                    np.array(self.sequence), 
+                    dtype=torch.float32
+                ).unsqueeze(0).to(self.device)
                 
-                def write(self, text):
-                    # Still write to original stdout for debugging
-                    original_stdout.write(text)
-                    
-                    # Process predictions if they appear in the output
-                    self.buffer += text
-                    if "Prediction:" in self.buffer:
-                        for exercise_class in self.app_instance.exercises[self.app_instance.selected_exercise]["classes"]:
-                            if exercise_class in self.buffer:
-                                self.app_instance.predictions.append(exercise_class)
-                                self.app_instance.frame_count += 1
-                                break
-                        self.buffer = ""
+                with torch.no_grad():
+                    output = self.model(input_seq)
+                    pred_class = classes[torch.argmax(output, 1).item()]
+                    confidence = torch.softmax(output, dim=1).max().item()
                 
-                def flush(self):
-                    original_stdout.flush()
-            
-            # Redirect stdout
-            sys.stdout = CustomStdout(self)
-            
-            # Create a way to stop the evaluate modules (they use infinite while loops)
-            def run_evaluate_with_timeout(module_name):
-                # Import in a separate process that we can terminate
-                process = multiprocessing.Process(
-                    target=self._import_and_run_module, 
-                    args=(module_name,)
+                self.predictions.append(pred_class)
+                color = colors.get(pred_class, (0, 0, 255))
+                
+                # Get feedback message
+                feedback = feedback_messages.get(pred_class, f"Prediction: {pred_class}")
+                
+                # Draw prediction and feedback on frame
+                cv2.putText(
+                    frame, 
+                    feedback,
+                    (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 
+                    1, 
+                    color, 
+                    2
                 )
-                process.start()
                 
-                # Wait for the stop event or process completion
-                while not self.stop_event.is_set() and process.is_alive():
-                    time.sleep(0.1)
+                # Draw confidence and frame count
+                cv2.putText(
+                    frame,
+                    f"Confidence: {confidence:.2f}",
+                    (10, 70),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (255, 255, 255),
+                    2
+                )
                 
-                # Terminate the process if it's still running
-                if process.is_alive():
-                    process.terminate()
-                    process.join()
+                cv2.putText(
+                    frame,
+                    f"Frames: {self.frame_count}",
+                    (10, 100),
+                    cv2.FONT_HERSHEY_SIMPLEX,
+                    0.7,
+                    (255, 255, 255),
+                    2
+                )
             
-            # Launch the appropriate evaluate module
-            if self.selected_exercise == "pushups":
-                run_evaluate_with_timeout("pushups.evaluate")
-            elif self.selected_exercise == "squats":
-                run_evaluate_with_timeout("squats.evaluate")
-            elif self.selected_exercise == "plank":
-                run_evaluate_with_timeout("plank.evaluate")
+            cv2.namedWindow(f"{exercise_config['name']} Pose Classifier", cv2.WINDOW_NORMAL)
+            cv2.setWindowProperty(
+                f"{exercise_config['name']} Pose Classifier", 
+                cv2.WND_PROP_FULLSCREEN, 
+                cv2.WINDOW_FULLSCREEN
+            )
             
-        except Exception as e:
-            self.status_label.configure(text=f"Error: {str(e)}")
-        finally:
-            # Restore stdout
-            sys.stdout = original_stdout
+            cv2.imshow(f"{exercise_config['name']} Pose Classifier", frame)
             
-            # Update UI
-            self.stop_evaluation()
-    
-    def _import_and_run_module(self, module_name):
-        """Helper function to import and run a module in a separate process."""
-        try:
-            __import__(module_name)
-        except Exception as e:
-            print(f"Error importing {module_name}: {str(e)}")
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                self.stop_evaluation()
+                break
     
     def stop_evaluation(self):
         self.is_evaluating = False
         
-        # Set stop event if it exists
-        if hasattr(self, 'stop_event'):
-            self.stop_event.set()
+        if self.cap:
+            self.cap.release()
+        if self.pose:
+            self.pose.close()
         
-        # Close all OpenCV windows that might have been opened by the evaluate modules
         cv2.destroyAllWindows()
         
         # Update UI

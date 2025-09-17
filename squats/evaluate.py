@@ -3,6 +3,9 @@ import torch
 import numpy as np
 from trainer import PoseTransformer
 import mediapipe as mp
+import os
+from threading import Thread
+import time  # Add time module for delay
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -16,6 +19,22 @@ model.to(device)
 model.eval()
 
 classes = ['correct', 'knees_in']  # Ensure matches training
+
+# -----------------------------
+# Feedback messages for each class
+# -----------------------------
+feedback_messages = {
+    'correct': "Perfect Form! Keep it up!",
+    'knees_in': "Keep your knees aligned with your toes"
+}
+
+# Function to speak feedback using Windows PowerShell
+def speak_feedback(message):
+    # Only speak for incorrect forms
+    if message != feedback_messages['correct']:
+        command = f'powershell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\'{message}\')"'
+        # Run as a separate thread so it doesn't block the video feed
+        Thread(target=lambda: os.system(command)).start()
 
 # -----------------------------
 # MediaPipe setup
@@ -46,6 +65,11 @@ cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1200)
 seq_len = 30
 sequence = []
 
+# Variables to control feedback frequency
+last_feedback_time = 0
+feedback_cooldown = 3  # seconds between spoken feedback
+last_pred_class = None
+
 while True:
     ret, frame = cap.read()
     if not ret:
@@ -71,8 +95,16 @@ while True:
         }
         color = class_colors.get(pred_class, (0, 0, 255))
 
-        cv2.putText(frame, f"Prediction: {pred_class}", (10, 30),
+        # Display feedback
+        cv2.putText(frame, feedback_messages[pred_class], (10, 30),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+        
+        # Speak feedback for incorrect forms with cooldown
+        current_time = time.time()
+        if pred_class != 'correct' and (current_time - last_feedback_time > feedback_cooldown or pred_class != last_pred_class):
+            speak_feedback(feedback_messages[pred_class])
+            last_feedback_time = current_time
+            last_pred_class = pred_class
 
     cv2.namedWindow("Squat Pose Classifier", cv2.WINDOW_NORMAL)
 

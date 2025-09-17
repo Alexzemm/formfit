@@ -3,6 +3,9 @@ import torch
 import numpy as np
 from trainer import PoseTransformer
 import mediapipe as mp
+import os
+from threading import Thread
+import time  # Add time module for delay
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -22,9 +25,17 @@ classes = ['correct', 'hips_down', 'hips_up']  # Ensure matches training
 # -----------------------------
 feedback_messages = {
     'correct': "Perfect Form! Keep it up!",
-    'hips_down': "Bring your hips down",
-    'hips_up': "Bring your hips up, back straight"
+    'hips_down': "Bring your hips up",
+    'hips_up': "Bring your hips down, back straight"
 }
+
+# Function to speak feedback using Windows PowerShell
+def speak_feedback(message):
+    # Only speak for incorrect forms
+    if message != feedback_messages['correct']:
+        command = f'powershell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\'{message}\')"'
+        # Run as a separate thread so it doesn't block the video feed
+        Thread(target=lambda: os.system(command)).start()
 
 # -----------------------------
 # MediaPipe setup
@@ -54,6 +65,11 @@ cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
 cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1200)
 seq_len = 30
 sequence = []
+
+# Variables to control feedback frequency
+last_feedback_time = 0
+feedback_cooldown = 3  # seconds between spoken feedback
+last_pred_class = None
 
 while True:
     ret, frame = cap.read()

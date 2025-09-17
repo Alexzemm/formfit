@@ -45,14 +45,14 @@
 <div id="workoutContent" class="tab-content" style="display: none;">
     <div class="section">
         <h2>Your Personalized Workout Plan</h2>
-        <div style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ workout_plan }}</div>
+        <div id="workoutPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ workout_plan }}</div>
     </div>
 </div>
 
 <div id="dietContent" class="tab-content" style="display: none;">
     <div class="section">
         <h2>Your Personalized Diet Plan</h2>
-        <div style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ diet_plan }}</div>
+        <div id="dietPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ diet_plan }}</div>
     </div>
 </div>
 
@@ -88,6 +88,92 @@
 .tab-content p {
     margin: 5px 0;
     color: #4a5568;
+}
+
+/* Enhanced plan content styling */
+.plan-content {
+    font-size: 16px;
+}
+
+/* Day headings */
+.plan-content h3, 
+.plan-content strong {
+    color: #5a67d8;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 600;
+}
+
+/* Diet headings */
+#dietPlanContent h3, 
+#dietPlanContent strong {
+    color: #ed8936;
+}
+
+/* Bullet points */
+.plan-content ul {
+    padding-left: 20px;
+    margin: 10px 0;
+}
+
+.plan-content li {
+    margin-bottom: 8px;
+}
+
+/* Weekly schedule and section formatting */
+.plan-content p {
+    margin: 8px 0;
+}
+
+/* Workout tables */
+.workout-day-header {
+    background: linear-gradient(135deg, #5a67d8, #667eea);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 20px 0 15px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.workout-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.workout-table th {
+    background: #f1f5f9;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #4a5568;
+}
+
+.workout-table td {
+    padding: 12px 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.workout-table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.exercise-name {
+    font-weight: 500;
+}
+
+.sets-reps {
+    text-align: center;
+    font-weight: 500;
+}
+
+.rest-time {
+    color: #718096;
 }
 </style>
 
@@ -213,7 +299,68 @@ function formatWorkoutContent() {
     }
 }
 
+// Format plan content to enhance readability
+function formatPlanContent() {
+    const workoutDiv = document.getElementById('workoutPlanContent');
+    const dietDiv = document.getElementById('dietPlanContent');
+    
+    if (workoutDiv) {
+        // Add structure to workout plan content
+        let content = workoutDiv.innerHTML;
+        
+        // Format day headings - "Day: Activity"
+        content = content.replace(/(\w+day):\s*([^<\n]+)/g, '<h3>$1: $2</h3>');
+        
+        // Format section titles
+        content = content.replace(/([1-9]\.\s+[A-Za-z\s]+):/g, '<strong>$1:</strong>');
+        
+        // Format workout tables when they exist
+        if (content.includes('Exercise') && content.includes('Sets') && content.includes('Reps')) {
+            // Find table-like structures and format them properly
+            content = content.replace(/Exercise\s+Sets\s+Reps\s+Rest/g, 
+                '<table class="workout-table"><thead><tr><th>Exercise</th><th>Sets</th><th>Reps</th><th>Rest</th></tr></thead><tbody>');
+            
+            // Format rows (this is a simplified approach)
+            content = content.replace(/([A-Za-z\s\-]+)\s+(\d+(?:-\d+)?)\s+(\d+(?:-\d+)?)\s+(\d+(?:-\d+)?\s?(?:sec|seconds|min|minutes)?)/g, 
+                '<tr><td>$1</td><td>$2</td><td>$3</td><td>$4</td></tr>');
+            
+            // Close table tags
+            content = content.replace(/(<\/tr>)(?!.*<\/tr>)/s, '$1</tbody></table>');
+        }
+        
+        // Format bullet points
+        content = content.replace(/•\s+([^•\n]+)/g, '<div class="bullet-point">• $1</div>');
+        
+        workoutDiv.innerHTML = content;
+    }
+    
+    if (dietDiv) {
+        // Add structure to diet plan content
+        let content = dietDiv.innerHTML;
+        
+        // Format day headings
+        content = content.replace(/Day\s+(\d):/g, '<h3>Day $1:</h3>');
+        
+        // Format meal titles
+        content = content.replace(/(Breakfast|Lunch|Dinner|Snack[s\s]*\d*):/g, '<strong>$1:</strong>');
+        
+        // Format bullet points
+        content = content.replace(/•\s+([^•\n]+)/g, '<div class="bullet-point">• $1</div>');
+        
+        // Format section titles
+        content = content.replace(/([1-9]\.\s+[A-Za-z\s]+):/g, '<strong>$1:</strong>');
+        
+        dietDiv.innerHTML = content;
+    }
+}
+
 // Run formatting when page loads
-document.addEventListener('DOMContentLoaded', formatWorkoutContent);
+document.addEventListener('DOMContentLoaded', function() {
+    formatPlanContent();
+    
+    // Also format when switching tabs to ensure formatting is applied
+    document.getElementById('workoutTab').addEventListener('click', formatPlanContent);
+    document.getElementById('dietTab').addEventListener('click', formatPlanContent);
+});
 </script>
 {% endblock %}

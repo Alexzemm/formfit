@@ -158,6 +158,8 @@ def check_user_plans(username):
                 matches = re.findall(pattern, content, re.DOTALL | re.IGNORECASE)
                 if matches:
                     workout_plan = matches[-1].replace('-- ', '').replace('\n-- ', '\n').strip()
+                    # Clean up formatting for the retrieved plan
+                    workout_plan = clean_plan_text(workout_plan)
         except Exception:
             pass
     
@@ -171,6 +173,8 @@ def check_user_plans(username):
                 matches = re.findall(pattern, content, re.DOTALL | re.IGNORECASE)
                 if matches:
                     diet_plan = matches[-1].replace('-- ', '').replace('\n-- ', '\n').strip()
+                    # Clean up formatting for the retrieved plan
+                    diet_plan = clean_plan_text(diet_plan)
         except Exception:
             pass
     
@@ -247,6 +251,32 @@ def login():
 def new_user():
     return render_template('index.html')
 
+def clean_plan_text(text):
+    """
+    Clean up text formatting from AI-generated plans by:
+    1. Removing excess asterisks used for Markdown formatting
+    2. Maintaining clear headings and structure
+    3. Preserving important formatting like numbering and lists
+    """
+    if not text:
+        return ""
+    
+    # Remove markdown formatting for bold/italic text
+    cleaned = re.sub(r'\*\*([^*]+)\*\*', r'\1', text)  # Remove ** bold **
+    cleaned = re.sub(r'\*([^*]+)\*', r'\1', cleaned)   # Remove * italic *
+    
+    # Clean up heading markers
+    cleaned = re.sub(r'#{1,3} ', '', cleaned)
+    
+    # Convert markdown lists to cleaner bullet points
+    cleaned = re.sub(r'^\* ', '• ', cleaned, flags=re.MULTILINE)
+    cleaned = re.sub(r'^- ', '• ', cleaned, flags=re.MULTILINE)
+    
+    # Keep indentation and line breaks consistent
+    cleaned = re.sub(r'\n{3,}', '\n\n', cleaned)
+    
+    return cleaned
+
 @app.route('/generate', methods=['POST'])
 def generate_plans():
     try:
@@ -277,6 +307,10 @@ def generate_plans():
         # Generate plans
         workout_plan = generator.generate_workout_plan(user_info)
         diet_plan = generator.generate_diet_plan(user_info)
+        
+        # Clean up the formatting
+        workout_plan = clean_plan_text(workout_plan)
+        diet_plan = clean_plan_text(diet_plan)
         
         return render_template('results.html', 
                              user_info=user_info,

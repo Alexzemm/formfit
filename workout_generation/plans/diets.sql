@@ -122,3 +122,92 @@
 -- **Important Note:** This is a sample plan. Listen to your body, adjust portions as needed, and don't hesitate to seek professional guidance from a registered dietitian or nutritionist for personalized advice.  Consistency and proper training are key to achieving your muscle gain goals.
 -- 
 
+-- Diet Plan for Yash RV
+-- Generated on: 2025-09-17 13:36:23
+-- ================================================
+-- Yash RV's Personalized Muscle Gain Diet Plan
+-- 
+-- This plan aims to help Yash RV gain muscle mass while considering his activity level and caloric needs.  Remember this is a sample plan, and individual results may vary.  It's crucial to listen to your body and adjust as needed. Consulting a registered dietitian or certified personal trainer is always recommended for personalized guidance.
+-- 
+-- 1. Daily Calorie and Macronutrient Breakdown:
+-- 
+--  Total Calories: 3292
+--  Macronutrient Ratio:
+--      Protein: 40% (approx. 330g) – Crucial for muscle growth and repair.
+--      Carbohydrates: 40% (approx. 395g) – Fuel for workouts and energy.
+--      Fats: 20% (approx. 73g) – Supports hormone production and overall health.
+-- 
+-- 2. 7-Day Meal Plan: (Adjust portion sizes based on your hunger and energy levels)
+-- 
+-- Day 1:
+-- 
+--  Breakfast (approx. 600 calories): 3 whole eggs scrambled with 1 cup spinach, 1/2 cup cooked quinoa, and 1 slice whole-wheat toast with 1 tbsp almond butter.
+--  Snack 1 (approx. 300 calories): Greek yogurt (1 cup) with 1/4 cup berries and a handful of almonds.
+--  Lunch (approx. 700 calories): 1.5 cups chicken breast (grilled or baked) with 1 cup brown rice and 1 cup steamed broccoli.
+--  Snack 2 (approx. 300 calories): Protein shake (whey protein powder, milk/water, banana).
+--  Dinner (approx. 800 calories): 6oz lean ground beef stir-fry with 1 cup mixed vegetables (peppers, onions, carrots) and 1/2 cup brown rice.
+--  Dessert (Optional, approx. 592 calories):  This can be incorporated into your daily caloric target as needed, perhaps with a small amount of dark chocolate.
+-- 
+-- Day 2:
+-- 
+--  Breakfast: Oatmeal (1/2 cup dry oats) with 1 scoop protein powder, 1/4 cup berries, and a sprinkle of nuts.
+--  Snack 1: Hard-boiled eggs (2) and a small apple.
+--  Lunch: Tuna salad sandwich (whole-wheat bread, tuna, avocado) with a side salad.
+--  Snack 2: Cottage cheese (1 cup) with sliced peaches.
+--  Dinner: Baked salmon (6oz) with roasted sweet potatoes (1 medium) and asparagus (1 cup).
+--  Dessert:  Consider a small fruit yogurt.
+-- 
+-- Day 3:
+-- 
+--  Breakfast: Protein pancakes (using protein powder) with berries and a drizzle of maple syrup.
+--  Snack 1: Trail mix (nuts, seeds, dried fruit – control portions).
+--  Lunch: Leftover salmon and roasted vegetables.
+--  Snack 2:  Peanut butter (2 tbsp) on whole-wheat crackers.
+--  Dinner: Chicken breast (6oz) with quinoa (1 cup) and a large green salad.
+--  Dessert: Consider a very small amount of dark chocolate.
+-- 
+-- Day 4-7:  Repeat a variation of the above days, incorporating different lean protein sources (chicken, fish, turkey, lean beef, tofu, beans), complex carbohydrates (brown rice, quinoa, sweet potatoes, oats), and plenty of fruits and vegetables.
+-- 
+-- 3. Portion Sizes and Food Quantities:
+-- 
+-- The above meal plan provides approximate portion sizes. Use a food scale and measuring cups to ensure accuracy, especially in the beginning.  Adjust portion sizes based on your individual needs and hunger levels.
+-- 
+-- 4. Meal Prep Tips:
+-- 
+--  Cook once, eat multiple times: Prepare large batches of grains, proteins, and vegetables on the weekend to save time during the week.
+--  Utilize leftovers: Repurpose leftovers into new meals (e.g., leftover chicken can be used in salads or wraps).
+--  Pack your lunch and snacks: This helps you stay on track with your diet and avoid unhealthy impulse purchases.
+--  Freeze portions: Freeze individual portions of meals for easy access later in the week.
+-- 
+-- 5. Hydration Recommendations:
+-- 
+-- Drink plenty of water throughout the day, aiming for at least 2-3 liters.  Adjust based on your activity level and sweat rate.
+-- 
+-- 6. Supplement Recommendations:
+-- 
+--  Creatine Monohydrate: Can help increase strength and muscle mass.  Start with a loading phase (20g/day for 5-7 days) then maintenance (3-5g/day).
+--  Whey Protein Powder: Convenient way to increase protein intake, especially after workouts.  Choose a high-quality whey protein isolate.
+--  Omega-3 Fatty Acids: Important for overall health and may reduce inflammation.
+--   Multivitamin: Ensure you are meeting your micronutrient needs.
+-- 
+-- Note: Consult your doctor or a registered dietitian before starting any new supplement regimen.
+-- 
+-- 7. Foods to Avoid and Prioritize:
+-- 
+-- Prioritize:
+-- 
+--  Lean protein sources: Chicken breast, turkey, fish, lean beef, eggs, beans, lentils, tofu.
+--  Complex carbohydrates: Brown rice, quinoa, sweet potatoes, oats, whole-wheat bread.
+--  Healthy fats: Avocado, nuts, seeds, olive oil.
+--  Fruits and vegetables:  A wide variety for essential vitamins and minerals.
+-- 
+-- Avoid or Minimize:
+-- 
+--  Processed foods:  High in unhealthy fats, sugar, and sodium.
+--  Sugary drinks: Sodas, juices, energy drinks.
+--  Excessive saturated and trans fats: Found in fried foods and processed snacks.
+-- • Refined carbohydrates: White bread, white rice, pastries.
+-- 
+-- This is a sample plan; it’s essential to adjust it based on your individual progress, preferences, and any feedback from your body. Remember consistency is key, and combining this diet with a regular strength training program will optimize your muscle gain goals.  Consult with a healthcare professional or registered dietitian for personalized advice.
+-- 
+

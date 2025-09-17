@@ -90,3 +90,100 @@
 -- This plan provides a solid foundation for Alex's muscle-gain journey. Remember consistency and proper nutrition are key to achieving your goals.  Listen to your body, adjust as needed, and enjoy the process!
 -- 
 
+-- Workout Plan for Yash RV
+-- Generated on: 2025-09-17 13:36:23
+-- ================================================
+-- Yash RV's Personalized Muscle Gain Workout Plan (4 Weeks)
+-- 
+-- This plan is designed for a 19-year-old male, very active, aiming for muscle gain. It's crucial to listen to your body and adjust as needed.  This plan assumes access to a well-equipped gym.
+-- 
+-- 1. Weekly Workout Schedule:
+-- 
+--  Monday: Upper Body (Push)
+--  Tuesday: Lower Body
+--  Wednesday: Rest or Active Recovery (light cardio, stretching)
+--  Thursday: Upper Body (Pull)
+--  Friday: Lower Body
+--  Saturday: Full Body Circuit (optional, for extra volume)
+--  Sunday: Rest
+-- 
+-- 2. Detailed Exercises:
+-- 
+-- Monday: Upper Body (Push)
+-- 
+-- | Exercise          | Sets | Reps | Rest (sec) |
+-- |----------------------|------|------|-------------|
+-- | Bench Press         | 3    | 8-12 | 60-90       |
+-- | Incline Dumbbell Press | 3    | 8-12 | 60-90       |
+-- | Overhead Press      | 3    | 8-12 | 60-90       |
+-- | Triceps Pushdowns    | 3    | 12-15| 45-60       |
+-- | Dumbbell Lateral Raises | 3    | 12-15| 45-60       |
+-- 
+-- Tuesday: Lower Body
+-- 
+-- | Exercise          | Sets | Reps | Rest (sec) |
+-- |----------------------|------|------|-------------|
+-- | Barbell Squats      | 3    | 8-12 | 90-120      |
+-- | Romanian Deadlifts   | 3    | 10-15| 60-90       |
+-- | Leg Press           | 3    | 12-15| 60-90       |
+-- | Hamstring Curls     | 3    | 12-15| 45-60       |
+-- | Calf Raises         | 3    | 15-20| 45-60       |
+-- 
+-- Thursday: Upper Body (Pull)
+-- 
+-- | Exercise          | Sets | Reps | Rest (sec) |
+-- |----------------------|------|------|-------------|
+-- | Pull-ups (or Lat Pulldowns) | 3    | As many as possible (AMRAP) or 8-12 | 60-90       |
+-- | Barbell Rows       | 3    | 8-12 | 60-90       |
+-- | Seated Cable Rows  | 3    | 10-15| 60-90       |
+-- | Face Pulls         | 3    | 15-20| 45-60       |
+-- | Bicep Curls        | 3    | 12-15| 45-60       |
+-- 
+-- Friday: Lower Body (Focus on different variations than Tuesday)
+-- 
+-- | Exercise          | Sets | Reps | Rest (sec) |
+-- |----------------------|------|------|-------------|
+-- | Goblet Squats      | 3    | 10-15| 60-90       |
+-- | Lunges (alternating legs) | 3    | 10-12 per leg | 60-90       |
+-- | Leg Extensions     | 3    | 12-15| 45-60       |
+-- | Glute-Ham Raises (or Hyperextensions) | 3    | AMRAP or 10-15 | 60-90       |
+-- | Standing Calf Raises | 3    | 15-20| 45-60       |
+-- 
+-- Saturday: Full Body Circuit (Optional)
+-- 
+-- Perform each exercise for 30 seconds, followed by 15 seconds rest. Complete 3 rounds.
+-- 
+--  Burpees
+--  Mountain Climbers
+--  Push-ups
+--  Squats
+--  Dumbbell Rows
+--  Plank
+-- 
+-- 3. Progression Plan (4 Weeks):
+-- 
+--  Week 1-2: Focus on mastering form and completing the prescribed reps and sets.  Increase weight slightly if you can maintain good form for all sets.
+--  Week 3-4: Gradually increase weight, aiming for progressive overload.  Consider adding a set to each exercise or increasing the rep range (e.g., moving from 8-12 to 10-15).  If struggling with a particular exercise, focus on perfecting form before increasing weight.
+-- 
+-- 4. Warm-up (5-10 minutes before each workout):
+-- 
+--  Light cardio, such as jogging or jumping jacks (3 minutes)
+--  Dynamic stretching: arm circles, leg swings, torso twists (5 minutes)
+-- 
+-- 5. Cool-down (5-10 minutes after each workout):
+-- 
+--  Static stretching: hold each stretch for 30 seconds.  Focus on major muscle groups worked (e.g., chest, back, quads, hamstrings).
+-- 
+-- 6. Safety Tips and Modifications:
+-- 
+--  Proper Form:  Prioritize proper form over lifting heavy weight. Watch videos and, if possible, consult a trainer to ensure correct technique.
+--  Listen to your body:  Don’t push yourself too hard, especially when starting. Rest when needed and don't train through pain.
+--  Breathing: Exhale during the exertion phase of the lift (e.g., pushing or pulling) and inhale during the recovery phase.
+--  Spotters: Use spotters for heavy lifts like bench press and squats.
+--  Modifications:  If you can't perform an exercise, use a modification (e.g., using assisted pull-up machine instead of free weight pull-ups).  There are many variations of each exercise; find one that works for you.
+--  Nutrition:  A proper diet rich in protein is crucial for muscle growth. Ensure you are consuming enough calories to support your workouts and recovery.
+-- • Sleep: Aim for 7-9 hours of quality sleep per night to allow for muscle recovery and growth.
+-- 
+-- Important Note: This is a sample plan.  Individual needs vary.  Consult a healthcare professional or certified personal trainer before starting any new workout routine, especially if you have pre-existing medical conditions. They can help tailor this plan to your specific needs and goals.  Remember consistency is key! Stick to the plan and you will see results.
+-- 
+

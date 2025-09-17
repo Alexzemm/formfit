@@ -9,6 +9,7 @@ import time
 from collections import Counter
 import sys
 import os
+from threading import Thread
 
 # Add the folders to Python path
 sys.path.append(os.path.join(os.getcwd(), 'squats'))
@@ -95,6 +96,11 @@ class FitnessTrainerApp:
         self.predictions = []
         self.start_time = None
         self.frame_count = 0
+        
+        # Voice feedback variables
+        self.last_feedback_time = 0
+        self.feedback_cooldown = 3  # seconds between spoken feedback
+        self.last_pred_class = None
         
         # Setup MediaPipe
         self.mp_pose = mp.solutions.pose
@@ -242,6 +248,14 @@ class FitnessTrainerApp:
         elif exercise_key == "plank":
             self.plank_btn.configure(fg_color="green")
     
+    # Function to speak feedback using Windows PowerShell
+    def speak_feedback(self, message, feedback_messages):
+        # Only speak for incorrect forms
+        if message != feedback_messages['correct']:
+            command = f'powershell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\'{message}\')"'
+            # Run as a separate thread so it doesn't block the video feed
+            Thread(target=lambda: os.system(command)).start()
+    
     def load_model(self):
         try:
             exercise_config = self.exercises[self.selected_exercise]
@@ -305,6 +319,10 @@ class FitnessTrainerApp:
         self.frame_count = 0
         self.is_evaluating = True
         
+        # Reset voice feedback variables
+        self.last_feedback_time = 0
+        self.last_pred_class = None
+        
         # Update UI
         self.start_btn.configure(state="disabled")
         self.stop_btn.configure(state="normal")
@@ -347,7 +365,6 @@ class FitnessTrainerApp:
                 with torch.no_grad():
                     output = self.model(input_seq)
                     pred_class = classes[torch.argmax(output, 1).item()]
-                    confidence = torch.softmax(output, dim=1).max().item()
                 
                 self.predictions.append(pred_class)
                 color = colors.get(pred_class, (0, 0, 255))
@@ -366,21 +383,18 @@ class FitnessTrainerApp:
                     2
                 )
                 
-                # Draw confidence and frame count
-                cv2.putText(
-                    frame,
-                    f"Confidence: {confidence:.2f}",
-                    (10, 70),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.7,
-                    (255, 255, 255),
-                    2
-                )
+                # Speak feedback for incorrect forms with cooldown
+                current_time = time.time()
+                if pred_class != 'correct' and (current_time - self.last_feedback_time > self.feedback_cooldown or pred_class != self.last_pred_class):
+                    self.speak_feedback(feedback_messages[pred_class], feedback_messages)
+                    self.last_feedback_time = current_time
+                    self.last_pred_class = pred_class
                 
+                # Draw frame count
                 cv2.putText(
                     frame,
                     f"Frames: {self.frame_count}",
-                    (10, 100),
+                    (10, 70),
                     cv2.FONT_HERSHEY_SIMPLEX,
                     0.7,
                     (255, 255, 255),

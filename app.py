@@ -10,6 +10,7 @@ from collections import Counter
 import sys
 import os
 from threading import Thread
+import subprocess
 
 # Add the folders to Python path
 sys.path.append(os.path.join(os.getcwd(), 'squats'))
@@ -201,7 +202,7 @@ class FitnessTrainerApp:
         
         # Status frame
         self.status_frame = ctk.CTkFrame(main_frame)
-        self.status_frame.pack(pady=20, fill="x", padx=50)
+        self.status_frame.pack(pady=10, fill="x", padx=50)
         
         self.status_label = ctk.CTkLabel(
             self.status_frame,
@@ -210,9 +211,32 @@ class FitnessTrainerApp:
         )
         self.status_label.pack(pady=10)
         
+        # Workout Generation Button - New addition
+        workout_frame = ctk.CTkFrame(main_frame)
+        workout_frame.pack(pady=10, fill="x", padx=50)
+        
+        workout_label = ctk.CTkLabel(
+            workout_frame,
+            text="Need a personalized workout plan?",
+            font=ctk.CTkFont(size=16, weight="bold")
+        )
+        workout_label.pack(pady=5)
+        
+        self.workout_btn = ctk.CTkButton(
+            workout_frame,
+            text="Generate Workout & Diet Plan",
+            width=250,
+            height=40,
+            font=ctk.CTkFont(size=16),
+            fg_color="#4CAF50",  # Green color
+            hover_color="#45a049",  # Darker green for hover
+            command=self.launch_workout_generator
+        )
+        self.workout_btn.pack(pady=10)
+        
         # Benchmarks frame
         self.benchmark_frame = ctk.CTkFrame(main_frame)
-        self.benchmark_frame.pack(pady=20, fill="both", expand=True, padx=50)
+        self.benchmark_frame.pack(pady=10, fill="both", expand=True, padx=50)
         
         benchmark_title = ctk.CTkLabel(
             self.benchmark_frame,
@@ -227,6 +251,41 @@ class FitnessTrainerApp:
             font=ctk.CTkFont(size=12)
         )
         self.benchmark_text.pack(fill="both", expand=True, padx=20, pady=10)
+    
+    def launch_workout_generator(self):
+        """Launch the workout generation web app in a separate process"""
+        try:
+            # Get the path to the workout generator app
+            workout_app_path = os.path.join(os.getcwd(), 'workout_generation', 'app.py')
+            
+            # Check if file exists
+            if not os.path.exists(workout_app_path):
+                self.status_label.configure(text="Error: Workout generation app not found.")
+                return
+            
+            # Create a message to show the user
+            self.status_label.configure(text="Launching Workout Generator App...")
+            
+            # Launch the Flask app in a separate process
+            workout_thread = Thread(
+                target=lambda: subprocess.Popen([
+                    sys.executable, 
+                    workout_app_path
+                ], cwd=os.path.dirname(workout_app_path))
+            )
+            workout_thread.daemon = True
+            workout_thread.start()
+            
+            # Update status after a short delay
+            self.root.after(2000, lambda: self.status_label.configure(
+                text="Workout Generator launched! Check your browser."
+            ))
+            
+            # Open the browser after a short delay
+            self.root.after(3000, lambda: os.system("start http://127.0.0.1:5000"))
+            
+        except Exception as e:
+            self.status_label.configure(text=f"Error launching workout generator: {str(e)}")
         
     def select_exercise(self, exercise_key):
         self.selected_exercise = exercise_key

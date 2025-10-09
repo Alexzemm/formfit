@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🏋️ AI Fitness & Diet Plan Generator 🥗</h1>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <a href="/" style="color: #5a67d8; text-decoration: none; font-weight: 600; padding: 10px 20px; border: 2px solid #5a67d8; border-radius: 8px; display: inline-block; transition: all 0.3s ease;">← Back to Login</a>
+</div>
+
+<form id="fitnessForm" method="POST" action="/generate">
+    <div class="section">
+        <h2>👤 Personal Information</h2>
+        <div class="form-row">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-row">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" min="10" max="100" required>
+        </div>
+        <div class="form-row">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="height">Height (cm):</label>
+            <input type="number" id="height" name="height" min="100" max="250" required>
+        </div>
+        <div class="form-row">
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" name="weight" min="30" max="300" required>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>💪 Fitness Information</h2>
+        <div class="form-row">
+            <label for="fitness_goal">Fitness Goal:</label>
+            <select id="fitness_goal" name="fitness_goal" required>
+                <option value="">Select Goal</option>
+                <option value="Weight Loss">Weight Loss</option>
+                <option value="Muscle Gain">Muscle Gain</option>
+                <option value="Maintenance">Maintenance</option>
+                <option value="Endurance">Endurance</option>
+                <option value="Strength">Strength</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="activity_level">Activity Level:</label>
+            <select id="activity_level" name="activity_level" required>
+                <option value="">Select Activity Level</option>
+                <option value="Sedentary">Sedentary</option>
+                <option value="Lightly Active">Lightly Active</option>
+                <option value="Moderately Active">Moderately Active</option>
+                <option value="Very Active">Very Active</option>
+                <option value="Extremely Active">Extremely Active</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="workout_days">Workout Days per Week:</label>
+            <input type="number" id="workout_days" name="workout_days" min="1" max="7" required>
+        </div>
+        <div class="form-row">
+            <label for="workout_duration">Workout Duration (minutes):</label>
+            <input type="number" id="workout_duration" name="workout_duration" min="15" max="180" required>
+        </div>
+        <div class="form-row">
+            <label for="workout_location">Workout Location:</label>
+            <select id="workout_location" name="workout_location" required>
+                <option value="">Select Location</option>
+                <option value="Gym">Gym</option>
+                <option value="Home">Home</option>
+                <option value="Outdoor">Outdoor</option>
+                <option value="Mixed">Mixed</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🍽️ Diet Information</h2>
+        <div class="form-row">
+            <label for="diet_preference">Diet Preference:</label>
+            <select id="diet_preference" name="diet_preference" required>
+                <option value="">Select Diet Preference</option>
+                <option value="Omnivore">Omnivore</option>
+                <option value="Vegetarian">Vegetarian</option>
+                <option value="Vegan">Vegan</option>
+                <option value="Keto">Keto</option>
+                <option value="Paleo">Paleo</option>
+                <option value="Mediterranean">Mediterranean</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="country">Country:</label>
+            <input type="text" id="country" name="country" placeholder="e.g., India, USA, UK" required>
+        </div>
+        <div class="form-row">
+            <label for="allergies">Allergies/Intolerances:</label>
+            <input type="text" id="allergies" name="allergies" placeholder="Optional">
+        </div>
+        <div class="form-row">
+            <label for="medical_conditions">Medical Conditions:</label>
+            <input type="text" id="medical_conditions" name="medical_conditions" placeholder="Optional">
+        </div>
+    </div>
+
+    <button type="submit" id="generateBtn">Generate My Personalized Plans</button>
+    
+    <div id="status" class="status" style="display: none;"></div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.getElementById('fitnessForm').addEventListener('submit', function(e) {
+    const btn = document.getElementById('generateBtn');
+    const status = document.getElementById('status');
+    
+    btn.disabled = true;
+    btn.textContent = 'Generating Plans...';
+    status.style.display = 'block';
+    status.className = 'status loading';
+    status.textContent = 'Generating your personalized plans... This may take a few moments.';
+});
+</script>
+{% endblock %}

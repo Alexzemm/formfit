@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>🏋️ Welcome Back! 🥗</h1>
+
+<div id="loginSection">
+    <form id="loginForm" method="POST" action="/login">
+        <input type="hidden" name="action" value="login">
+        <div class="section">
+            <h2>👤 Login to Your Account</h2>
+            <div class="form-row">
+                <label for="username">Your Name:</label>
+                <input type="text" id="username" name="username" required placeholder="Enter your name">
+            </div>
+            <div class="form-row">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required placeholder="Enter your password">
+            </div>
+        </div>
+
+        <button type="submit">Login</button>
+        
+        <div style="text-align: center; margin: 20px 0;">
+            <p style="color: #666;">Don't have an account? 
+                <a href="#" onclick="showRegisterForm()" style="color: #5a67d8; text-decoration: none; font-weight: 600;">Register here</a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<div id="registerSection" style="display: none;">
+    <form id="registerForm" method="POST" action="/login">
+        <input type="hidden" name="action" value="register">
+        <div class="section">
+            <h2>📝 Create New Account</h2>
+            <div class="form-row">
+                <label for="reg_username">Your Name:</label>
+                <input type="text" id="reg_username" name="username" required placeholder="Choose a username">
+            </div>
+            <div class="form-row">
+                <label for="reg_password">Password:</label>
+                <input type="password" id="reg_password" name="password" required placeholder="Create a password" minlength="4">
+            </div>
+            <div class="form-row">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" required placeholder="Confirm your password" minlength="4">
+            </div>
+        </div>
+
+        <button type="submit">Register & Continue</button>
+        
+        <div style="text-align: center; margin: 20px 0;">
+            <p style="color: #666;">Already have an account? 
+                <a href="#" onclick="showLoginForm()" style="color: #5a67d8; text-decoration: none; font-weight: 600;">Login here</a>
+            </p>
+        </div>
+    </form>
+</div>
+
+<div id="status" class="status" style="display: none;"></div>
+
+<script>
+function showRegisterForm() {
+    document.getElementById('loginSection').style.display = 'none';
+    document.getElementById('registerSection').style.display = 'block';
+    document.getElementById('status').style.display = 'none';
+}
+
+function showLoginForm() {
+    document.getElementById('loginSection').style.display = 'block';
+    document.getElementById('registerSection').style.display = 'none';
+    document.getElementById('status').style.display = 'none';
+}
+
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const status = document.getElementById('status');
+    
+    if (!username || !password) {
+        e.preventDefault();
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = 'Please fill in both name and password.';
+        return;
+    }
+});
+
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    const username = document.getElementById('reg_username').value.trim();
+    const password = document.getElementById('reg_password').value.trim();
+    const confirmPassword = document.getElementById('confirm_password').value.trim();
+    const status = document.getElementById('status');
+    
+    if (!username || !password || !confirmPassword) {
+        e.preventDefault();
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = 'Please fill in all fields.';
+        return;
+    }
+    
+    if (password !== confirmPassword) {
+        e.preventDefault();
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = 'Passwords do not match. Please try again.';
+        return;
+    }
+    
+    if (password.length < 4) {
+        e.preventDefault();
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = 'Password must be at least 4 characters long.';
+        return;
+    }
+});
+
+// Handle form submission errors
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's an error message in URL params (from Flask redirect)
+    const urlParams = new URLSearchParams(window.location.search);
+    const error = urlParams.get('error');
+    if (error) {
+        const status = document.getElementById('status');
+        status.style.display = 'block';
+        status.className = 'status error';
+        status.textContent = decodeURIComponent(error);
+    }
+});
+</script>
+{% endblock %}

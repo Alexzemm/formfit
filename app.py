@@ -18,15 +18,9 @@ sys.path.append(os.path.join(os.getcwd(), 'pushups'))
 sys.path.append(os.path.join(os.getcwd(), 'plank'))
 
 # Import the trainer module from all folders
-try:
-    from squats.trainer import PoseTransformer as SquatTransformer
-    from pushups.trainer import PoseTransformer as PushupTransformer
-    from plank.trainer import PoseTransformer as PlankTransformer
-except ImportError:
-    # Fallback if trainer is in the same directory structure
-    from trainer import PoseTransformer as SquatTransformer
-    from trainer import PoseTransformer as PushupTransformer
-    from trainer import PoseTransformer as PlankTransformer
+from squats.trainer import PoseTransformer as SquatTransformer
+from pushups.trainer import PoseTransformer as PushupTransformer
+from plank.trainer import PoseTransformer as PlankTransformer
 
 # Configure customtkinter
 ctk.set_appearance_mode("dark")

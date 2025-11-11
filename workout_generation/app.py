@@ -16,7 +16,8 @@ class FitnessPlanGenerator:
         """
         Initialize the Fitness Plan Generator with Gemini API (API key hardcoded)
         """
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        # Use the newer Gemini model
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
 
     def generate_workout_plan(self, user_info: Dict[str, Any]) -> str:
         """

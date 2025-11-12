@@ -728,3 +728,320 @@
 -- 
 -- Good luck on your muscle gain journey, Alex!
 
+-- Diet Plan for alex
+-- Generated on: 2025-11-12 19:37:56
+-- ================================================
+-- Here's a detailed personalized diet plan tailored for Alex, focusing on muscle gain with a vegetarian diet.
+-- 
+-- Personalized Muscle Gain Diet Plan for Alex
+-- 
+-- User Profile Summary:
+--    Name: Alex
+--    Age: 21, Male
+--    Height: 180.0cm, Weight: 60.0kg (Lean physique, requiring consistent calorie surplus and protein)
+--    Fitness Goal: Muscle Gain
+--    Activity Level: Lightly Active
+--    Estimated Daily Calories Needed: 2588 calories (We'll aim for this as a starting point for muscle gain, as it's already a good maintenance/slight surplus for his current lean state and activity)
+--    Dietary Preference: Vegetarian (Ovo-Lacto Vegetarian assumed, meaning eggs and dairy are included)
+--    Allergies/Intolerances: None
+--    Medical Conditions: None
+-- 
+-- ---
+-- 
+-- 1. Daily Calorie and Macronutrient Breakdown
+-- 
+-- To support muscle growth, we'll aim for a slight caloric surplus, high protein, moderate carbohydrates, and healthy fats.
+-- 
+--    Target Daily Calories: ~2600 kcal
+--    Macronutrient Split:
+--        Protein: 125-135g (approx. 2g/kg body weight) - essential for muscle repair and growth.
+--            (130g protein  4 kcal/g = 520 kcal)
+--        Fats: 70-75g (approx. 1-1.2g/kg body weight) - crucial for hormone production, nutrient absorption, and satiety.
+--            (72g fat  9 kcal/g = 648 kcal)
+--        Carbohydrates: 365-375g (remaining calories) - primary energy source for workouts, muscle glycogen replenishment.
+--            (370g carbs  4 kcal/g = 1480 kcal)
+-- 
+--     Total Estimated Calories: 520 + 648 + 1480 = 2648 kcal (Close to the 2588 target, slightly over to ensure a good surplus for muscle gain).
+-- 
+-- ---
+-- 
+-- 2. 7-Day Vegetarian Muscle Gain Meal Plan
+-- 
+-- This plan is designed to be nutrient-dense, high in protein, and provide consistent energy throughout the day. Portion sizes are approximate and may need slight adjustments based on individual hunger and progress.
+-- 
+-- Key: P = Protein, C = Carbohydrates, F = Fats, V = Vegetables/Fruits
+-- 
+-- ---
+-- 
+-- #Day 1
+-- 
+--    Breakfast (approx. 450 kcal):
+--        1 cup (80g dry) Rolled Oats cooked with 1.5 cups water/milk (C)
+--        1 scoop (30g) Vegetarian Protein Powder (mixed into oats or as a shake with water/milk) (P)
+--        1/2 cup Mixed Berries (C, V)
+--        1 tbsp Chia Seeds (F, C)
+--        1 tbsp Almond Butter (F, P)
+--    Snack 1 (Mid-morning - approx. 250 kcal):
+--        1 Greek Yogurt (plain, high protein) (150g) (P, C)
+--        1 small Apple (C, V)
+--        1/4 cup Walnuts (F)
+--    Lunch (approx. 650 kcal):
+--        1.5 cups (cooked) Brown Rice (C)
+--        1 cup (cooked) Chickpea & Spinach Curry (made with coconut milk, tomatoes, spices) (P, C, F, V)
+--        1 cup mixed Greens Salad with 1 tbsp Olive Oil & Vinegar dressing (V, F)
+--    Snack 2 (Pre/Post-workout - approx. 350 kcal):
+--        2 slices Whole Wheat Bread (C)
+--        2 tbsp Hummus (P, F)
+--        1/2 Avocado, sliced (F, C)
+--        Handful of Cherry Tomatoes (V)
+--    Dinner (approx. 900 kcal):
+--        200g Paneer (cottage cheese), grilled or pan-fried (P, F)
+--        2 whole wheat Rotis/Naans (approx. 100g each) or 1.5 cups (cooked) Quinoa (C)
+--        1.5 cups mixed Vegetable Stir-fry (broccoli, bell peppers, carrots) (V)
+--        1 cup Dal (Lentil soup/stew) (P, C)
+-- 
+-- ---
+-- 
+-- #Day 2
+-- 
+--    Breakfast (approx. 450 kcal):
+--        3 Scrambled Eggs (P, F)
+--        2 slices Whole Wheat Toast (C)
+--        1/2 Avocado (F, C)
+--        Handful of Spinach and Mushrooms sautéed (V)
+--    Snack 1 (approx. 250 kcal):
+--        1 cup Cottage Cheese (P)
+--        1 Peach (C, V)
+--        1 tbsp Pumpkin Seeds (F)
+--    Lunch (approx. 650 kcal):
+--        1.5 cups (cooked) Quinoa Salad with 1 cup Mixed Beans (kidney, black, cannellini) (P, C)
+--        1/2 cup Corn, 1/2 cup Bell Peppers, Onions, Cilantro (V)
+--        Lime Vinaigrette (2 tbsp Olive oil, lime juice) (F)
+--    Snack 2 (approx. 350 kcal):
+--        Protein Smoothie: 1 scoop Protein Powder, 1 Banana, 1 cup Almond Milk, 1 tbsp Peanut Butter (P, C, F)
+--    Dinner (approx. 900 kcal):
+--        1.5 cups (cooked) Whole Wheat Pasta (C)
+--        1.5 cups Tofu & Vegetable Marinara: 200g firm Tofu (pressed, cubed), 1 cup Marinara sauce, 1.5 cups mixed veggies (zucchini, eggplant, spinach) (P, C, V)
+--        2 tbsp Nutritional Yeast (for cheesy flavour and B vitamins) (P)
+-- 
+-- ---
+-- 
+-- #Day 3
+-- 
+--    Breakfast (approx. 450 kcal):
+--        1 cup (80g dry) Oats with 1 scoop Protein Powder (P, C)
+--        1 tbsp Flax Seeds (F)
+--        1/2 cup Blueberries (V, C)
+--        1/4 cup Chopped Almonds (F, P)
+--    Snack 1 (approx. 250 kcal):
+--        2 Hard-boiled Eggs (P, F)
+--        1 medium Banana (C, V)
+--        Small handful of Cashews (F)
+--    Lunch (approx. 650 kcal):
+--        Large Vegetarian Lentil Soup (2 cups) (P, C, V)
+--        2 slices Whole Grain Bread with 1 tbsp Butter/Margarine (C, F)
+--        Small side salad (mixed greens, cucumber) (V)
+--    Snack 2 (approx. 350 kcal):
+--        1 cup Edamame (shelled, steamed) (P, F, C)
+--        1 whole wheat Pita Bread (C)
+--        2 tbsp Baba Ghanoush (eggplant dip) (F)
+--    Dinner (approx. 900 kcal):
+--        200g Black Bean Burgers (homemade or store-bought veggie patty) (P, C)
+--        2 Whole Wheat Buns (C)
+--        Large serving of Sweet Potato Fries (baked, 2 medium sweet potatoes) (C, V)
+--        Toppings: lettuce, tomato, onion, 2 tbsp low-fat mayo or Greek yogurt-based sauce (V, F)
+-- 
+-- ---
+-- 
+-- #Day 4
+-- 
+--    Breakfast (approx. 450 kcal):
+--        Protein Pancakes: Made with 1 scoop protein powder, 1/2 cup whole wheat flour, 1 egg, milk (P, C)
+--        1/2 cup Raspberries (V, C)
+--        2 tbsp Maple Syrup/Honey (C)
+--        2 tbsp Peanut Butter (F, P)
+--    Snack 1 (approx. 250 kcal):
+--        1 cup plain Greek Yogurt (P, C)
+--        1/4 cup Granola (low sugar) (C, F)
+--        1/4 cup Dried Cranberries (C, V)
+--    Lunch (approx. 650 kcal):
+--        1.5 cups (cooked) Brown Rice (C)
+--        1 cup Chana Masala (chickpea curry) (P, C, V)
+--        1/2 cup Cucumber Raita (yogurt, cucumber, spices) (P, C)
+--    Snack 2 (approx. 350 kcal):
+--        Trail Mix: 1/2 cup mixed nuts (almonds, cashews), seeds (sunflower, pumpkin), and a few dried fruits (P, C, F)
+--    Dinner (approx. 900 kcal):
+--        200g Tempeh Stir-fry (cubed tempeh, marinaded in soy sauce/tamari) (P, F)
+--        1.5 cups (cooked) Soba Noodles or Whole Wheat Spaghetti (C)
+--        2 cups mixed Asian Vegetables (bok choy, snap peas, carrots, broccoli) (V)
+--        Stir-fry sauce (low sodium soy sauce, ginger, garlic, sesame oil) (F)
+-- 
+-- ---
+-- 
+-- #Day 5
+-- 
+--    Breakfast (approx. 450 kcal):
+--        Breakfast Burrito: 2 large Whole Wheat Tortillas (C)
+--        3 Scrambled Eggs (P, F)
+--        1/2 cup Black Beans (P, C)
+--        1/4 cup Shredded Cheese (P, F)
+--        1/4 cup Salsa (V, C)
+--        Handful of Spinach (V)
+--    Snack 1 (approx. 250 kcal):
+--        1 cup Cottage Cheese (P)
+--        1/2 cup Pineapple Chunks (V, C)
+--        1/4 cup Pecans (F)
+--    Lunch (approx. 650 kcal):
+--        Large Buddha Bowl: 1 cup (cooked) Quinoa (C)
+--        1 cup Roasted Vegetables (Brussels sprouts, carrots, bell peppers) (V)
+--        150g Baked Tofu (P)
+--        2 tbsp Tahini dressing (F)
+--    Snack 2 (approx. 350 kcal):
+--        Protein bar (check labels for vegetarian protein source and calorie content, aim for >20g protein) (P, C, F)
+--        1 Pear (V, C)
+--    Dinner (approx. 900 kcal):
+--        Vegetarian Shepherd's Pie: Lentil & Mixed Vegetable base (carrots, peas, corn, onions) (P, C, V)
+--        Topped with 2 medium Mashed Potatoes (C)
+--        1/4 cup Shredded Cheese baked on top (P, F)
+-- 
+-- ---
+-- 
+-- #Day 6
+-- 
+--    Breakfast (approx. 450 kcal):
+--        1 cup (80g dry) Rolled Oats with 1 scoop Protein Powder (P, C)
+--        1 tbsp Almond Butter (F, P)
+--        1/2 Banana, sliced (V, C)
+--        1/4 cup Pomegranate Seeds (V, C)
+--    Snack 1 (approx. 250 kcal):
+--        1 cup Soy Milk or Cow's Milk (P, C, F)
+--        2 Rice Cakes with 1 tbsp Peanut Butter (C, F, P)
+--    Lunch (approx. 650 kcal):
+--        Large Salad with 150g Grilled Halloumi Cheese (P, F)
+--        1 cup Mixed Greens, 1/2 cup Cherry Tomatoes, 1/2 cup Cucumber, 1/4 cup Olives (V, F)
+--        1 cup (cooked) Orzo or Pasta Salad (C)
+--        3 tbsp Balsamic Vinaigrette (F)
+--    Snack 2 (approx. 350 kcal):
+--        "No-Bake" Energy Bites: Oats, Peanut Butter, Chia Seeds, Protein Powder, Honey (P, C, F) - 3-4 medium bites
+--    Dinner (approx. 900 kcal):
+--        Homemade Vegetarian Pizza: 1 medium Whole Wheat Pizza Base (C)
+--        1/2 cup Tomato Sauce (V, C)
+--        1 cup Shredded Mozzarella (P, F)
+--        Toppings: 1 cup mixed veggies (mushrooms, bell peppers, onions, spinach) (V)
+--        Side: Large Green Salad with light dressing (V)
+-- 
+-- ---
+-- 
+-- #Day 7
+-- 
+--    Breakfast (approx. 450 kcal):
+--        Smoothie Bowl: 1 scoop Protein Powder, 1 cup Mixed Berries, 1 Banana, 1 cup Greek Yogurt, 1/2 cup Spinach (P, C, F, V)
+--        Toppings: 1 tbsp Hemp Seeds, 1 tbsp shredded Coconut (F)
+--    Snack 1 (approx. 250 kcal):
+--        2 Hard-boiled Eggs (P, F)
+--        1 cup Carrot Sticks & Celery with 2 tbsp Hummus (V, C, P, F)
+--    Lunch (approx. 650 kcal):
+--        Leftover Vegetarian Lentil Soup or Chana Masala from a previous day (P, C, V)
+--        1 cup (cooked) Brown Rice (C)
+--        1 Whole Wheat Naan/Roti (C)
+--    Snack 2 (approx. 350 kcal):
+--        Baked Sweet Potato (medium) with 1/2 cup Cottage Cheese and a sprinkle of Cinnamon (C, P, V)
+--    Dinner (approx. 900 kcal):
+--        Vegetarian Chili: 1.5 cups (cooked) Mixed Beans (kidney, pinto, black), 1 cup Crushed Tomatoes, 1 cup Vegetable Broth, Onions, Peppers, Spices (P, C, V)
+--        Served with 1/2 cup plain Greek Yogurt/Sour Cream (P, C)
+--        1/2 cup Shredded Cheese (P, F)
+--        2-3 Corn Tortillas or 1 cup (cooked) Brown Rice (C)
+-- 
+-- ---
+-- 
+-- 4. Meal Prep Tips
+-- 
+--    Batch Cook Grains: Cook a large batch of brown rice, quinoa, or lentils at the beginning of the week. Store in airtight containers in the fridge for quick meal assembly.
+--    Pre-chop Vegetables: Wash and chop vegetables like bell peppers, onions, broccoli, and carrots in advance. Store them in the fridge, ready to be added to stir-fries, curries, or salads.
+--    Prepare Protein Sources:
+--        Hard-boil a dozen eggs for quick snacks.
+--        Bake or pan-fry a large block of tofu or tempeh, then slice and store.
+--        Make a big batch of chickpea or lentil curry/stew.
+--    Smoothie Packs: Portion out fruits, spinach, and seeds into individual bags or containers and freeze. In the morning, just add protein powder, liquid, and blend.
+--    Overnight Oats: Prepare overnight oats the night before for a grab-and-go breakfast.
+--    Healthy Snacks on Hand: Keep nuts, seeds, fruit, and Greek yogurt readily available to avoid less healthy choices.
+-- 
+-- ---
+-- 
+-- 5. Hydration Recommendations
+-- 
+--    Target: Aim for at least 3-4 liters (100-140 oz) of water per day. Given your activity level and goal of muscle gain (which increases metabolic processes and protein intake), sufficient hydration is critical.
+--    Consistency: Sip water throughout the day, rather than drinking large amounts at once.
+--    Before/During/After Workouts: Increase water intake around your workout times.
+--    Monitor Urine Color: A pale yellow color indicates good hydration. Darker urine suggests you need more water.
+--    Limit Sugary Drinks: Avoid sodas, energy drinks, and excessive fruit juices, as they contribute empty calories and can hinder your progress. Herbal teas and infused water are good alternatives.
+-- 
+-- ---
+-- 
+-- 6. Supplement Recommendations (Optional, but beneficial for muscle gain)
+-- 
+-- While whole foods should always be the foundation, certain supplements can help meet your needs for muscle growth and recovery.
+-- 
+-- 1.  Vegetarian Protein Powder (Whey or Plant-Based Blend):
+--        Benefit: Convenient way to increase protein intake, especially around workouts, to support muscle protein synthesis.
+--        Recommendation: A high-quality Whey Protein Isolate (if you consume dairy) or a Plant-Based Protein Blend (pea, rice, hemp, soy) if you prefer to avoid dairy. Aim for 20-30g protein per serving.
+--        Timing: Post-workout, or as a snack between meals.
+-- 2.  Creatine Monohydrate:
+--        Benefit: The most researched and effective supplement for increasing strength, power output, and lean muscle mass.
+--        Recommendation: 3-5g daily, consistently. It doesn't need to be cycled.
+--        Timing: Any time of day, as consistency is key. Can be mixed with your protein shake or water.
+-- 3.  Multivitamin/Mineral:
+--        Benefit: Acts as an "insurance policy" to ensure you're getting all essential micronutrients, which can sometimes be tricky with a focused diet.
+--        Recommendation: A reputable brand's daily multivitamin.
+--        Timing: With a meal to enhance absorption.
+-- 4.  Omega-3 Fatty Acids (Algae-based):
+--        Benefit: Essential for heart health, brain function, reducing inflammation, and overall well-being. Vegetarian diets can sometimes be lower in EPA/DHA.
+--        Recommendation: An algae-based DHA/EPA supplement is suitable for vegetarians.
+--        Timing: With a meal.
+-- 5.  Vitamin D3:
+--        Benefit: Crucial for bone health, immune function, and can play a role in hormone regulation, including testosterone. Many people are deficient.
+--        Recommendation: 1000-2000 IU daily, especially if you have limited sun exposure.
+--        Timing: With a meal containing fats for better absorption.
+-- 
+-- ---
+-- 
+-- 7. Foods to Avoid and Prioritize
+-- 
+-- Foods to Prioritize:
+-- 
+--    High-Quality Vegetarian Protein:
+--        Legumes: Lentils, chickpeas, black beans, kidney beans, edamame.
+--        Soy Products: Tofu, tempeh, edamame, soy milk.
+--        Dairy (if consumed): Greek yogurt, cottage cheese, paneer, milk, cheese.
+--        Eggs (if consumed): Whole eggs.
+--        Nuts & Seeds: Almonds, walnuts, cashews, peanuts, chia seeds, flax seeds, pumpkin seeds, hemp seeds, nut butters.
+--        Whole Grains (minor protein contribution): Quinoa, oats, brown rice, whole wheat bread/pasta.
+--    Complex Carbohydrates:
+--        Whole Grains: Brown rice, quinoa, oats, whole wheat bread, whole wheat pasta, barley, farro.
+--        Starchy Vegetables: Sweet potatoes, potatoes, corn, peas.
+--        Fruits: Berries, bananas, apples, oranges, pears, mangoes.
+--    Healthy Fats:
+--        Avocado, olive oil, nuts, seeds, nut butters.
+--    Vitamins & Minerals:
+--        A wide variety of colorful fruits and vegetables (leafy greens, bell peppers, broccoli, carrots, tomatoes, berries, citrus fruits).
+-- 
+-- Foods to Avoid/Limit:
+-- 
+--    Highly Processed Foods: Packaged snacks, fast food, processed vegetarian meats high in sodium and unhealthy fats. These often lack nutrients and are high in empty calories.
+--    Excessive Added Sugars: Candies, sugary drinks (soda, sweetened juices, energy drinks), most desserts. These provide quick energy but lead to crashes and minimal nutritional benefit.
+--    Trans Fats: Found in some processed foods, fried foods, and baked goods. Look for "partially hydrogenated oil" on ingredient lists.
+--    Refined Grains (as primary carb source): White bread, white pasta, white rice (while not necessarily "bad" in moderation, prioritize whole-grain versions for more fiber and nutrients).
+--    Excessive Saturated Fats: While some saturated fat is okay, excessive amounts from cheese, butter, and fried foods should be moderated.
+-- 
+-- ---
+-- 
+-- Important Considerations:
+-- 
+--    Consistency is Key: Stick to the plan as much as possible, but don't be afraid to make minor adjustments based on your preferences and what's available.
+--    Listen to Your Body: Pay attention to your hunger and satiety cues. If you're consistently very hungry, you might need a bit more food; if you're feeling overly full, slightly reduce portions.
+--    Track Progress: Monitor your weight, strength gains, and how your clothes fit. If you're not gaining weight (0.5-1 lb per week is a good target for lean muscle gain), consider increasing your daily calorie intake by 200-300 kcal.
+--    Workout Synergy: This diet plan is designed to support a consistent strength training program. Without effective resistance training, muscle gain will be minimal regardless of diet.
+--    Consult a Professional: For personalized adjustments or if you have any health concerns, consider consulting a registered dietitian or a sports nutritionist.
+-- 
+-- This comprehensive plan provides a strong foundation for Alex to achieve his muscle gain goals as a vegetarian. Good luck!
+

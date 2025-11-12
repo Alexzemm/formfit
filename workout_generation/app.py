@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import google.generativeai as genai
 from datetime import datetime
 from typing import Dict, Any
@@ -7,6 +7,7 @@ import re
 import hashlib
 
 app = Flask(__name__)
+app.secret_key = 'your-secret-key-here'  # Required for session management
 
 # Configure Gemini API
 genai.configure(api_key="AIzaSyAQk253RQmfrzRySKaVqRsK5reoO_5Uwv0")
@@ -149,6 +150,34 @@ def user_exists(username):
                 return True
     return False
 
+def get_user_profile(username):
+    """Get user profile data from saved profiles"""
+    if not os.path.exists('plans/user_profiles.json'):
+        return None
+    
+    try:
+        import json
+        with open('plans/user_profiles.json', 'r', encoding='utf-8') as f:
+            # Read all lines and find the most recent profile for this user
+            profiles = []
+            for line in f:
+                line = line.strip()
+                if line:
+                    try:
+                        profile_data = json.loads(line)
+                        if profile_data.get('username') == username:
+                            profiles.append(profile_data)
+                    except json.JSONDecodeError:
+                        continue
+            
+            if profiles:
+                # Return the most recent profile
+                return profiles[-1].get('profile')
+    except Exception:
+        pass
+    
+    return None
+
 def check_user_plans(username):
     """Check if user already has plans in SQL files"""
     workout_plan = None
@@ -206,8 +235,15 @@ def login():
         workout_plan, diet_plan = check_user_plans(username)
         
         if workout_plan and diet_plan:
-            # User has existing plans, show them
-            user_info = {'name': username}  # Minimal user info for existing plans
+            # User has existing plans, try to load profile data
+            user_info = get_user_profile(username)
+            if not user_info:
+                # Fallback to minimal user info if profile not found
+                user_info = {'name': username, 'age': 'N/A', 'gender': 'N/A', 'height': 'N/A', 
+                           'weight': 'N/A', 'fitness_goal': 'N/A', 'activity_level': 'N/A',
+                           'workout_days': 'N/A', 'workout_duration': 'N/A', 'workout_location': 'N/A',
+                           'diet_preference': 'N/A', 'allergies': 'None', 'medical_conditions': 'None'}
+            
             return render_template('results.html', 
                                  user_info=user_info,
                                  workout_plan=workout_plan,
@@ -242,8 +278,15 @@ def login():
         workout_plan, diet_plan = check_user_plans(username)
         
         if workout_plan and diet_plan:
-            # User has existing plans, show them
-            user_info = {'name': username}  # Minimal user info for existing plans
+            # User has existing plans, try to load profile data
+            user_info = get_user_profile(username)
+            if not user_info:
+                # Fallback to minimal user info if profile not found
+                user_info = {'name': username, 'age': 'N/A', 'gender': 'N/A', 'height': 'N/A', 
+                           'weight': 'N/A', 'fitness_goal': 'N/A', 'activity_level': 'N/A',
+                           'workout_days': 'N/A', 'workout_duration': 'N/A', 'workout_location': 'N/A',
+                           'diet_preference': 'N/A', 'allergies': 'None', 'medical_conditions': 'None'}
+            
             return render_template('results.html', 
                                  user_info=user_info,
                                  workout_plan=workout_plan,
@@ -252,6 +295,12 @@ def login():
         else:
             # User doesn't have plans, redirect to form
             return render_template('index.html')
+
+@app.route('/logout')
+def logout():
+    # Clear session data and redirect to login page
+    session.clear()
+    return redirect(url_for('index'))
 
 @app.route('/new')
 def new_user():
@@ -336,11 +385,39 @@ def save_plans():
         diet_plan = request.form.get('diet_plan')
         name = request.form.get('name')
         
+        # Get user profile data from form
+        user_info = {
+            'name': name,
+            'age': request.form.get('age'),
+            'gender': request.form.get('gender'),
+            'height': request.form.get('height'),
+            'weight': request.form.get('weight'),
+            'fitness_goal': request.form.get('fitness_goal'),
+            'activity_level': request.form.get('activity_level'),
+            'workout_days': request.form.get('workout_days'),
+            'workout_duration': request.form.get('workout_duration'),
+            'workout_location': request.form.get('workout_location'),
+            'diet_preference': request.form.get('diet_preference'),
+            'allergies': request.form.get('allergies', ''),
+            'medical_conditions': request.form.get('medical_conditions', ''),
+            'country': request.form.get('country', '')
+        }
+        
         timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         
         # Create plans directory if it doesn't exist
         if not os.path.exists('plans'):
             os.makedirs('plans')
+        
+        # Save user profile data to a JSON-like format in a separate file
+        import json
+        with open(f"plans/user_profiles.json", 'a', encoding='utf-8') as f:
+            profile_data = {
+                'username': name,
+                'profile': user_info,
+                'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            }
+            f.write(json.dumps(profile_data) + '\n')
         
         # Save workout plan to workouts.sql
         with open(f"plans/workouts.sql", 'a', encoding='utf-8') as f:

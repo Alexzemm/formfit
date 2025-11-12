@@ -16,17 +16,20 @@ import subprocess
 sys.path.append(os.path.join(os.getcwd(), 'squats'))
 sys.path.append(os.path.join(os.getcwd(), 'pushups'))
 sys.path.append(os.path.join(os.getcwd(), 'plank'))
+sys.path.append(os.path.join(os.getcwd(), 'russian_twists'))
 
 # Import the trainer module from all folders
 try:
     from squats.trainer import PoseTransformer as SquatTransformer
     from pushups.trainer import PoseTransformer as PushupTransformer
     from plank.trainer import PoseTransformer as PlankTransformer
+    from russian_twists.trainer import PoseTransformer as RussianTransformer
 except ImportError:
     # Fallback if trainer is in the same directory structure
     from trainer import PoseTransformer as SquatTransformer
     from trainer import PoseTransformer as PushupTransformer
     from trainer import PoseTransformer as PlankTransformer
+    from trainer import PoseTransformer as RussianTransformer
 
 # Configure customtkinter
 ctk.set_appearance_mode("dark")
@@ -81,6 +84,19 @@ class FitnessTrainerApp:
                     'correct': "Perfect Form! Keep it up!",
                     'hips_down': "Bring your hips up",
                     'hips_up': "Bring your hips down, back straight"
+                }
+            },
+            "russian_twists": {
+                "name": "Russian Twists",
+                "model_path": "russian_twists/russian_transformer.pth", 
+                "classes": ['correct', 'legs_bent'],
+                "colors": {
+                    'correct': (0, 255, 0),
+                    'legs_bent': (0, 0, 255)
+                },
+                "feedback_messages": {
+                    'correct': "Perfect Form! Keep it up!",
+                    'legs_bent': "Straighten your legs more"
                 }
             }
         }
@@ -165,6 +181,16 @@ class FitnessTrainerApp:
             command=lambda: self.select_exercise("plank")
         )
         self.plank_btn.pack(side="left", padx=10)
+        
+        self.russian_btn = ctk.CTkButton(
+            button_frame,
+            text="Russian Twists", 
+            width=120,
+            height=60,
+            font=ctk.CTkFont(size=16),
+            command=lambda: self.select_exercise("russian_twists")
+        )
+        self.russian_btn.pack(side="left", padx=10)
         
         # Selected exercise display
         self.selected_label = ctk.CTkLabel(
@@ -298,6 +324,7 @@ class FitnessTrainerApp:
         self.pushup_btn.configure(fg_color=default_color)
         self.squat_btn.configure(fg_color=default_color)
         self.plank_btn.configure(fg_color=default_color)
+        self.russian_btn.configure(fg_color=default_color)
         
         # Highlight the selected exercise button
         if exercise_key == "pushups":
@@ -306,6 +333,8 @@ class FitnessTrainerApp:
             self.squat_btn.configure(fg_color="green")
         elif exercise_key == "plank":
             self.plank_btn.configure(fg_color="green")
+        elif exercise_key == "russian_twists":
+            self.russian_btn.configure(fg_color="green")
     
     # Function to speak feedback using Windows PowerShell
     def speak_feedback(self, message, feedback_messages):
@@ -327,6 +356,8 @@ class FitnessTrainerApp:
                 self.model = SquatTransformer(num_classes=num_classes)
             elif self.selected_exercise == "plank":
                 self.model = PlankTransformer(num_classes=num_classes)
+            elif self.selected_exercise == "russian_twists":
+                self.model = RussianTransformer(num_classes=num_classes)
             
             self.model.load_state_dict(torch.load(
                 exercise_config["model_path"], 
@@ -555,6 +586,10 @@ class FitnessTrainerApp:
             if prediction_counts.get('hips_up', 0) > prediction_counts.get('correct', 0):
                 report += "• Lower your hips to be aligned with your shoulders and ankles\n"
                 report += "• Keep your back straight\n"
+        elif self.selected_exercise == "russian_twists":
+            if prediction_counts.get('legs_bent', 0) > prediction_counts.get('correct', 0):
+                report += "• Keep your legs straighter for proper form\n"
+                report += "• Focus on core rotation, not just moving your arms\n"
         
         if correct_percentage < 80:
             report += "• Practice the movement slowly to build muscle memory\n"

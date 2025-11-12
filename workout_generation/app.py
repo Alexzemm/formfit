@@ -9,14 +9,14 @@ import hashlib
 app = Flask(__name__)
 
 # Configure Gemini API
-genai.configure(api_key="AIzaSyBkd2kSANEaOUI-mWmoyYHkZz6KcAu5SnU")
+genai.configure(api_key="AIzaSyAQk253RQmfrzRySKaVqRsK5reoO_5Uwv0")
 
 class FitnessPlanGenerator:
     def __init__(self):
         """
         Initialize the Fitness Plan Generator with Gemini API (API key hardcoded)
         """
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.5-flash')
 
     def generate_workout_plan(self, user_info: Dict[str, Any]) -> str:
         """
@@ -126,7 +126,10 @@ def verify_user_credentials(username, password):
     hashed_password = hash_password(password)
     with open('users/credentials.txt', 'r', encoding='utf-8') as f:
         for line in f:
-            stored_username, stored_password = line.strip().split(':', 1)
+            line = line.strip()
+            if not line or ':' not in line:
+                continue  # Skip empty or malformed lines
+            stored_username, stored_password = line.split(':', 1)
             if stored_username == username and stored_password == hashed_password:
                 return True
     return False
@@ -138,7 +141,10 @@ def user_exists(username):
     
     with open('users/credentials.txt', 'r', encoding='utf-8') as f:
         for line in f:
-            stored_username, _ = line.strip().split(':', 1)
+            line = line.strip()
+            if not line or ':' not in line:
+                continue  # Skip empty or malformed lines
+            stored_username, _ = line.split(':', 1)
             if stored_username == username:
                 return True
     return False

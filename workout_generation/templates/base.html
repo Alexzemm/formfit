@@ -6,38 +6,45 @@
     <title>{% block title %}AI Fitness & Diet Plan Generator{% endblock %}</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
+        body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #232526 0%, #414345 100%);
             min-height: 100vh;
-            color: #333;
+            color: #f1f1f1;
         }
-        .container { 
-            max-width: 900px; 
-            margin: 0 auto; 
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
             padding: 20px;
-            background: white;
+            background: rgba(35, 39, 47, 0.7);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 20px;
             margin-bottom: 20px;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 1px 2px rgba(255,255,255,0.1) inset;
         }
-        h1 { 
-            text-align: center; 
-            color: #5a67d8; 
+        h1 {
+            text-align: center;
+            color: #a3bffa;
             margin-bottom: 30px;
             font-size: 2.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
         }
         .section {
-            background: #f8f9fa;
+            background: rgba(45, 50, 64, 0.6);
+            backdrop-filter: blur(10px) saturate(150%);
+            -webkit-backdrop-filter: blur(10px) saturate(150%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 20px;
             margin: 20px 0;
             border-radius: 10px;
             border-left: 4px solid #5a67d8;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
         .section h2 {
-            color: #5a67d8;
+            color: #a3bffa;
             margin-bottom: 15px;
             font-size: 1.3rem;
         }
@@ -49,25 +56,31 @@
         label {
             width: 200px;
             font-weight: 600;
-            color: #4a5568;
+            color: #b5b5b5;
         }
         input, select {
             flex: 1;
             padding: 12px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: rgba(35, 39, 47, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #f1f1f1;
             border-radius: 8px;
             font-size: 16px;
             transition: all 0.3s ease;
         }
         input:focus, select:focus {
             outline: none;
-            border-color: #5a67d8;
-            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+            border-color: #a3bffa;
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.2);
         }
         button {
-            background: linear-gradient(135deg, #5a67d8, #667eea);
-            color: white;
-            border: none;
+            background: linear-gradient(135deg, rgba(90, 103, 216, 0.8), rgba(242, 244, 246, 0.8));
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #232526;
             padding: 15px 30px;
             border-radius: 8px;
             font-size: 18px;
@@ -76,10 +89,13 @@
             transition: all 0.3s ease;
             margin: 20px 0;
             width: 100%;
+            box-shadow: 0 2px 8px rgba(90, 103, 216, 0.2);
         }
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(90, 103, 216, 0.4);
+            box-shadow: 0 4px 15px rgba(90, 103, 216, 0.3);
+            background: linear-gradient(135deg, rgba(242, 244, 246, 0.9), rgba(90, 103, 216, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         button:disabled {
             opacity: 0.6;
@@ -94,20 +110,62 @@
             font-weight: 500;
         }
         .status.loading {
-            background: #fef5e7;
-            color: #d69e2e;
+            background: #3a3a2e;
+            color: #ffe066;
         }
         .status.success {
-            background: #f0fff4;
-            color: #38a169;
+            background: #234d20;
+            color: #a3ffb0;
         }
         .status.error {
-            background: #fed7d7;
-            color: #e53e3e;
+            background: #4b2323;
+            color: #ff6b6b;
+        }
+        /* Header Styles */
+        .header {
+            background: rgba(35, 39, 47, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header-content {
+            max-width: 100%;
+            padding: 0 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #a3bffa 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(163, 191, 250, 0.3);
+        }
+        .tagline {
+            font-size: 0.9rem;
+            color: #b5b5b5;
+            font-weight: 400;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <div class="logo">FormFit</div>
+                <div class="tagline">AI-Powered Fitness & Nutrition</div>
+            </div>
+        </div>
+    </div>
     <div class="container">
         {% block content %}{% endblock %}
     </div>

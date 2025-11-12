@@ -45,14 +45,14 @@
 <div id="workoutContent" class="tab-content" style="display: none;">
     <div class="section">
         <h2>Your Personalized Workout Plan</h2>
-        <div id="workoutPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ workout_plan }}</div>
+    <div id="workoutPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: rgba(35, 39, 47, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #f1f1f1; padding: 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">{{ workout_plan }}</div>
     </div>
 </div>
 
 <div id="dietContent" class="tab-content" style="display: none;">
     <div class="section">
         <h2>Your Personalized Diet Plan</h2>
-        <div id="dietPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0;">{{ diet_plan }}</div>
+    <div id="dietPlanContent" class="plan-content" style="white-space: pre-wrap; line-height: 1.6; background: rgba(35, 39, 47, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); color: #f1f1f1; padding: 20px; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1);">{{ diet_plan }}</div>
     </div>
 </div>
 
@@ -61,9 +61,9 @@
         <input type="hidden" name="workout_plan" value="{{ workout_plan }}">
         <input type="hidden" name="diet_plan" value="{{ diet_plan }}">
         <input type="hidden" name="name" value="{{ user_info.name }}">
-        <button type="submit" onclick="savePlans(event)" style="background: linear-gradient(135deg, #48bb78, #38a169);">💾 Save Plans</button>
+        <button type="submit" onclick="savePlans(event)" style="background: linear-gradient(135deg, rgba(72, 187, 120, 0.8), rgba(255, 255, 255, 0.8)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #234d20; box-shadow: 0 2px 8px rgba(72, 187, 120, 0.2);">💾 Save Plans</button>
     </form>
-    <button onclick="window.location.href='/new'" style="flex: 1; background: linear-gradient(135deg, #ed8936, #dd6b20);">🔄 Generate New Plans</button>
+    <button onclick="window.location.href='/new'" style="flex: 1; background: linear-gradient(135deg, rgba(237, 137, 54, 0.8), rgba(255, 255, 255, 0.8)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); color: #7b341e; box-shadow: 0 2px 8px rgba(237, 137, 54, 0.2);">🔄 Generate New Plans</button>
 </div>
 
 <div id="saveStatus" class="status" style="display: none;"></div>
@@ -72,33 +72,43 @@
 {% block scripts %}
 <style>
 .tab-btn {
-    background: #e2e8f0;
-    color: #4a5568;
-    border: 2px solid #e2e8f0;
+    background: rgba(35, 39, 47, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #b5b5b5;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 .tab-btn.active {
-    background: linear-gradient(135deg, #5a67d8, #667eea);
-    color: white;
-    border-color: #5a67d8;
+    background: linear-gradient(135deg, rgba(90, 103, 216, 0.8), rgba(242, 244, 246, 0.8));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #232526;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(90, 103, 216, 0.2);
 }
 .tab-content h3 {
-    color: #5a67d8;
+    color: #a3bffa;
     margin: 15px 0 10px 0;
 }
 .tab-content p {
     margin: 5px 0;
-    color: #4a5568;
+    color: #b5b5b5;
 }
 
 /* Enhanced plan content styling */
 .plan-content {
     font-size: 16px;
+    background: rgba(35, 39, 47, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #f1f1f1;
 }
 
 /* Day headings */
 .plan-content h3, 
 .plan-content strong {
-    color: #5a67d8;
+    color: #a3bffa;
     margin-top: 25px;
     margin-bottom: 10px;
     display: block;
@@ -128,8 +138,11 @@
 
 /* Workout tables */
 .workout-day-header {
-    background: linear-gradient(135deg, #5a67d8, #667eea);
-    color: white;
+    background: linear-gradient(135deg, rgba(90, 103, 216, 0.8), rgba(35, 37, 38, 0.6));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f1f1f1;
     padding: 10px 15px;
     border-radius: 6px;
     margin: 20px 0 15px;
@@ -143,24 +156,31 @@
     margin: 15px 0;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    background: rgba(35, 39, 47, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .workout-table th {
-    background: #f1f5f9;
+    background: rgba(45, 50, 64, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 12px 15px;
     text-align: left;
     font-weight: 600;
-    color: #4a5568;
+    color: #a3bffa;
 }
 
 .workout-table td {
     padding: 12px 15px;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #f1f1f1;
 }
 
 .workout-table tr:nth-child(even) {
-    background-color: #f8fafc;
+    background-color: rgba(35, 39, 47, 0.3);
 }
 
 .exercise-name {
@@ -173,7 +193,7 @@
 }
 
 .rest-time {
-    color: #718096;
+    color: #b5b5b5;
 }
 </style>
 

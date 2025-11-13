@@ -4,7 +4,7 @@ import torch
 from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 
-class PushupDataset(Dataset):
+class LungeDataset(Dataset):
     def __init__(self, keypoints_dir, classes, transform=None):
         self.samples = []
         self.labels = []
@@ -30,9 +30,9 @@ class PushupDataset(Dataset):
         return seq, label
 
 
-def get_dataloaders(keypoints_dir="C:\\python\\formfit_pose\\main\\pushups\\keypoints", batch_size=4, test_size=0.2, shuffle=True):
-    classes = sorted(os.listdir(keypoints_dir))  # ['correct', 'pike', 'snake']
-    dataset = PushupDataset(keypoints_dir, classes)
+def get_dataloaders(keypoints_dir="C:\\python\\formfit_pose\\main\\lunges\\keypoints_normalized", batch_size=4, test_size=0.2, shuffle=True):
+    classes = sorted(os.listdir(keypoints_dir))  # ['back_straight', 'correct', 'legs_far']
+    dataset = LungeDataset(keypoints_dir, classes)
 
     # Train/test split
     indices = list(range(len(dataset)))

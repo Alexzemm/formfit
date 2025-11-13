@@ -17,6 +17,7 @@ sys.path.append(os.path.join(os.getcwd(), 'squats'))
 sys.path.append(os.path.join(os.getcwd(), 'pushups'))
 sys.path.append(os.path.join(os.getcwd(), 'plank'))
 sys.path.append(os.path.join(os.getcwd(), 'russian_twists'))
+sys.path.append(os.path.join(os.getcwd(), 'lunges'))
 
 # Import the trainer module from all folders
 try:
@@ -24,12 +25,14 @@ try:
     from pushups.trainer import PoseTransformer as PushupTransformer
     from plank.trainer import PoseTransformer as PlankTransformer
     from russian_twists.trainer import PoseTransformer as RussianTransformer
+    from lunges.trainer import PoseTransformer as LungeTransformer
 except ImportError:
     # Fallback if trainer is in the same directory structure
     from trainer import PoseTransformer as SquatTransformer
     from trainer import PoseTransformer as PushupTransformer
     from trainer import PoseTransformer as PlankTransformer
     from trainer import PoseTransformer as RussianTransformer
+    from trainer import PoseTransformer as LungeTransformer
 
 # Configure customtkinter
 ctk.set_appearance_mode("dark")
@@ -98,6 +101,21 @@ class FitnessTrainerApp:
                     'correct': "Perfect Form! Keep it up!",
                     'legs_bent': "Straighten your legs more"
                 }
+            },
+            "lunges": {
+                "name": "Lunges",
+                "model_path": "lunges/lunge_transformer.pth", 
+                "classes": ['back_straight', 'correct', 'legs_far'],
+                "colors": {
+                    'back_straight': (0, 0, 255),
+                    'correct': (0, 255, 0),
+                    'legs_far': (255, 0, 0)
+                },
+                "feedback_messages": {
+                    'back_straight': "Keep your back straight",
+                    'correct': "Perfect Form! Keep it up!",
+                    'legs_far': "Keep your legs farther"
+                }
             }
         }
         
@@ -118,6 +136,12 @@ class FitnessTrainerApp:
         self.last_feedback_time = 0
         self.feedback_cooldown = 3  # seconds between spoken feedback
         self.last_pred_class = None
+        
+        # Lunges-specific variables for smoothing and normalization
+        self.prediction_history = None
+        self.last_confident_prediction = None
+        self.CONFIDENCE_THRESHOLD = 0.60
+        self.SMOOTHING_WINDOW = 5
         
         # Setup MediaPipe
         self.mp_pose = mp.solutions.pose
@@ -191,6 +215,16 @@ class FitnessTrainerApp:
             command=lambda: self.select_exercise("russian_twists")
         )
         self.russian_btn.pack(side="left", padx=10)
+        
+        self.lunge_btn = ctk.CTkButton(
+            button_frame,
+            text="Lunges", 
+            width=120,
+            height=60,
+            font=ctk.CTkFont(size=16),
+            command=lambda: self.select_exercise("lunges")
+        )
+        self.lunge_btn.pack(side="left", padx=10)
         
         # Selected exercise display
         self.selected_label = ctk.CTkLabel(
@@ -325,6 +359,7 @@ class FitnessTrainerApp:
         self.squat_btn.configure(fg_color=default_color)
         self.plank_btn.configure(fg_color=default_color)
         self.russian_btn.configure(fg_color=default_color)
+        self.lunge_btn.configure(fg_color=default_color)
         
         # Highlight the selected exercise button
         if exercise_key == "pushups":
@@ -335,6 +370,8 @@ class FitnessTrainerApp:
             self.plank_btn.configure(fg_color="green")
         elif exercise_key == "russian_twists":
             self.russian_btn.configure(fg_color="green")
+        elif exercise_key == "lunges":
+            self.lunge_btn.configure(fg_color="green")
     
     # Function to speak feedback using Windows PowerShell
     def speak_feedback(self, message, feedback_messages):
@@ -358,6 +395,8 @@ class FitnessTrainerApp:
                 self.model = PlankTransformer(num_classes=num_classes)
             elif self.selected_exercise == "russian_twists":
                 self.model = RussianTransformer(num_classes=num_classes)
+            elif self.selected_exercise == "lunges":
+                self.model = LungeTransformer(num_classes=num_classes)
             
             self.model.load_state_dict(torch.load(
                 exercise_config["model_path"], 
@@ -382,6 +421,41 @@ class FitnessTrainerApp:
             return np.array(keypoints, dtype=np.float32)
         else:
             return np.zeros(33*3, dtype=np.float32)
+    
+    def normalize_pose(self, keypoints):
+        """
+        Normalize pose to be invariant to camera position/distance.
+        Centers on hip midpoint and scales by torso length.
+        Used only for lunges exercise.
+        """
+        if np.all(keypoints == 0):
+            return keypoints
+        
+        # Reshape to (33, 3)
+        kp = keypoints.reshape(33, 3)
+        
+        # MediaPipe landmark indices
+        # 23: Left Hip, 24: Right Hip, 11: Left Shoulder, 12: Right Shoulder
+        left_hip = kp[23]
+        right_hip = kp[24]
+        left_shoulder = kp[11]
+        right_shoulder = kp[12]
+        
+        # Calculate hip center as reference point
+        hip_center = (left_hip + right_hip) / 2
+        
+        # Calculate torso length for scaling
+        shoulder_center = (left_shoulder + right_shoulder) / 2
+        torso_length = np.linalg.norm(shoulder_center - hip_center)
+        
+        # Avoid division by zero
+        if torso_length < 0.01:
+            torso_length = 1.0
+        
+        # Center and scale
+        kp_normalized = (kp - hip_center) / torso_length
+        
+        return kp_normalized.flatten()
     
     def start_evaluation(self):
         if not self.selected_exercise:
@@ -413,6 +487,15 @@ class FitnessTrainerApp:
         self.last_feedback_time = 0
         self.last_pred_class = None
         
+        # Reset lunges-specific variables
+        if self.selected_exercise == "lunges":
+            from collections import deque
+            self.prediction_history = deque(maxlen=self.SMOOTHING_WINDOW)
+            self.last_confident_prediction = None
+        else:
+            self.prediction_history = None
+            self.last_confident_prediction = None
+        
         # Update UI
         self.start_btn.configure(state="disabled")
         self.stop_btn.configure(state="normal")
@@ -440,6 +523,11 @@ class FitnessTrainerApp:
             
             self.frame_count += 1
             keypoints = self.extract_keypoints(frame)
+            
+            # Apply normalization only for lunges
+            if self.selected_exercise == "lunges":
+                keypoints = self.normalize_pose(keypoints)
+            
             self.sequence.append(keypoints)
             
             if len(self.sequence) > self.seq_len:
@@ -454,7 +542,37 @@ class FitnessTrainerApp:
                 
                 with torch.no_grad():
                     output = self.model(input_seq)
-                    pred_class = classes[torch.argmax(output, 1).item()]
+                    
+                    # Special handling for lunges with confidence-based smoothing
+                    if self.selected_exercise == "lunges":
+                        import torch.nn.functional as F
+                        probabilities = F.softmax(output, dim=1).cpu().numpy()[0]
+                        pred_idx = np.argmax(probabilities)
+                        pred_class = classes[pred_idx]
+                        confidence = probabilities[pred_idx]
+                        
+                        # Add to prediction history for temporal smoothing
+                        self.prediction_history.append(pred_class)
+                        
+                        # Use majority vote from prediction history
+                        if len(self.prediction_history) == self.SMOOTHING_WINDOW:
+                            votes = {}
+                            for pred in self.prediction_history:
+                                votes[pred] = votes.get(pred, 0) + 1
+                            smoothed_class = max(votes, key=votes.get)
+                        else:
+                            smoothed_class = pred_class
+                        
+                        # Only update prediction if confidence is high enough
+                        if confidence >= self.CONFIDENCE_THRESHOLD:
+                            pred_class = smoothed_class
+                            self.last_confident_prediction = smoothed_class
+                        elif self.last_confident_prediction is not None:
+                            pred_class = self.last_confident_prediction
+                        else:
+                            pred_class = 'correct'
+                    else:
+                        pred_class = classes[torch.argmax(output, 1).item()]
                 
                 self.predictions.append(pred_class)
                 color = colors.get(pred_class, (0, 0, 255))
@@ -590,6 +708,13 @@ class FitnessTrainerApp:
             if prediction_counts.get('legs_bent', 0) > prediction_counts.get('correct', 0):
                 report += "• Keep your legs straighter for proper form\n"
                 report += "• Focus on core rotation, not just moving your arms\n"
+        elif self.selected_exercise == "lunges":
+            if prediction_counts.get('back_straight', 0) > prediction_counts.get('correct', 0):
+                report += "• Keep your back straight and upright\n"
+                report += "• Engage your core for better posture\n"
+            if prediction_counts.get('legs_far', 0) > prediction_counts.get('correct', 0):
+                report += "• Increase the distance between your front and back leg\n"
+                report += "• Take a larger step forward for proper form\n"
         
         if correct_percentage < 80:
             report += "• Practice the movement slowly to build muscle memory\n"

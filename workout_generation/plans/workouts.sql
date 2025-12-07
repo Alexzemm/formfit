@@ -892,3 +892,190 @@
 -- 
 -- This comprehensive plan provides Alex with a structured and challenging routine to kickstart his muscle gain journey at home. Consistency and adherence to the progressive overload principle will be key to his success. Good luck, Alex!
 
+-- Workout Plan for User
+-- Generated on: 2025-11-14 15:01:44
+-- ================================================
+-- Here is a personalized 4-week workout plan designed for you, "User," focusing on muscle gain with bodyweight exercises at home within your preferred 30-minute duration.
+-- 
+-- ---
+-- 
+-- User Profile Summary:
+-- 
+--    Name: User
+--    Age: 19, Male
+--    Height: 182.0cm, Weight: 77.0kg
+--    Fitness Goal: Muscle Gain
+--    Activity Level: Lightly Active
+--    Available workout days: 4 days/week
+--    Preferred duration: 30 minutes
+--    Workout location: Home (Bodyweight focus)
+--    Medical conditions: None
+-- 
+-- ---
+-- 
+-- Important Considerations for Muscle Gain:
+-- 
+-- 1.  Nutrition: For muscle gain, aim for a slight caloric surplus (eating slightly more calories than you burn) and ensure adequate protein intake (roughly 1.6-2.2 grams of protein per kg of body weight daily). Focus on whole, unprocessed foods.
+-- 2.  Progressive Overload: To build muscle, you need to continually challenge your body. This plan includes strategies for progressive overload (increasing difficulty over time).
+-- 3.  Consistency: Adhering to the schedule regularly is key.
+-- 4.  Sleep & Recovery: Aim for 7-9 hours of quality sleep per night, as muscle repair and growth primarily occur during rest.
+-- 
+-- ---
+-- 
+-- Weekly Workout Schedule
+-- 
+-- This plan uses an A/B split, meaning you'll alternate between two different full-body workouts.
+-- 
+--    Monday: Full Body Workout A
+--    Tuesday: Rest or Active Recovery (light walk)
+--    Wednesday: Full Body Workout B
+--    Thursday: Rest or Active Recovery (light walk)
+--    Friday: Full Body Workout A
+--    Saturday: Full Body Workout B
+--    Sunday: Rest or Active Recovery
+-- 
+-- ---
+-- 
+-- Warm-up Routine (3-4 minutes - Perform before every workout)
+-- 
+--    Jumping Jacks / Marching in Place: 60 seconds (light cardio to get heart rate up)
+--    Arm Circles: 30 seconds forward, 30 seconds backward
+--    Leg Swings: 30 seconds forward/backward per leg
+--    Torso Twists: 30 seconds (gentle rotation)
+--    Bodyweight Squats (shallow): 10-12 reps (light, controlled movement)
+--    Cat-Cow Stretch: 30 seconds (improves spinal mobility)
+-- 
+-- ---
+-- 
+-- Cool-down Routine (3-4 minutes - Perform after every workout)
+-- 
+-- Hold each stretch for 20-30 seconds, breathing deeply.
+-- 
+--    Quad Stretch: Hold one foot behind you, heel towards glute. (Each leg)
+--    Hamstring Stretch: Sit or stand, reach for your toes.
+--    Chest Stretch: Clasp hands behind your back or place hands on a doorframe and lean forward.
+--    Triceps Stretch: Reach one arm overhead, bend elbow, use other hand to gently push elbow down. (Each arm)
+--    Cobra Stretch: Lie on stomach, push up gently with hands, lifting chest off floor.
+--    Child's Pose: Kneel, sit back on heels, stretch arms forward.
+-- 
+-- ---
+-- 
+-- Detailed Workout Days: Sets, Reps, Rest
+-- 
+--    General Rep Range for Muscle Gain: 8-15 reps (aim for challenging but good form)
+--    Rest Between Sets: 45-60 seconds (Keep this strict to fit within 30 minutes)
+--    Tempo: Control both the lowering (eccentric) and lifting (concentric) phases of each exercise. Aim for 2 seconds down, 1 second pause, 2 seconds up.
+-- 
+-- ---
+-- 
+-- Full Body Workout A (Approx. 22-24 minutes)
+-- 
+-- 1.  Push-ups (Chest, Shoulders, Triceps)
+--        Sets: 3
+--        Reps: Max reps with good form (aim for 10-15).
+--        Form: Start with hands slightly wider than shoulder-width apart, body in a straight line from head to heels. Lower your chest towards the floor, then push back up.
+--        Modification (Easier): Incline Push-ups (hands on an elevated surface like a table or chair)
+--        Modification (Harder): Decline Push-ups (feet on an elevated surface)
+-- 
+-- 2.  Bodyweight Squats (Quads, Glutes, Hamstrings)
+--        Sets: 3
+--        Reps: 12-15
+--        Form: Stand with feet shoulder-width apart, toes slightly out. Keep your chest up, push hips back, and lower down as if sitting in a chair. Go as deep as comfortable while maintaining good form (knees tracking over toes, not caving in).
+--        Modification (Easier): Hold onto a sturdy support for balance.
+--        Modification (Harder): Pause Squats (hold at the bottom for 2-3 seconds)
+-- 
+-- 3.  Inverted Table Rows (Back, Biceps, Core)
+--        Sets: 3
+--        Reps: 8-12
+--        Form: Lie on your back underneath a sturdy table (or a sturdy broomstick across two chairs, ensure it's stable). Grab the edge of the table with an overhand grip, hands slightly wider than shoulder-width. Keep your body straight (like a plank), pull your chest towards the table, squeezing your shoulder blades. Lower slowly.
+--        Modification (Easier): Bend your knees, keeping feet flat on the floor.
+--        Modification (Harder): Place your feet on an elevated surface (e.g., a chair).
+-- 
+-- 4.  Plank (Core)
+--        Sets: 3
+--        Hold Time: 30-45 seconds
+--        Form: Support yourself on your forearms and toes, body in a straight line from head to heels. Engage your core, avoid letting your hips sag or rise too high.
+--        Modification (Easier): Drop to your knees (Knee Plank).
+--        Modification (Harder): Single-Arm or Single-Leg Plank.
+-- 
+-- ---
+-- 
+-- Full Body Workout B (Approx. 22-24 minutes)
+-- 
+-- 1.  Reverse Lunges (Quads, Glutes, Hamstrings, Balance)
+--        Sets: 3
+--        Reps: 10-12 per leg
+--        Form: Stand tall. Step one leg directly back, lowering your hips until both knees are bent at approximately a 90-degree angle. Ensure your front knee is over your ankle, and your back knee hovers just above the ground. Push through the front heel to return to the starting position. Alternate legs.
+--        Modification (Easier): Hold onto a wall for balance.
+--        Modification (Harder): Pause at the bottom of the lunge for 2 seconds.
+-- 
+-- 2.  Pike Push-ups (Shoulders, Triceps)
+--        Sets: 3
+--        Reps: 8-12
+--        Form: Start in a downward dog position, forming an inverted V-shape with your body. Hands shoulder-width apart, hips high. Lower the top of your head towards the floor by bending your elbows, then push back up.
+--        Modification (Easier): Reduce the range of motion.
+--        Modification (Harder): Elevate your feet on a low step or books (Decline Pike Push-ups).
+-- 
+-- 3.  Superman (Back Extensors, Glutes, Hamstrings)
+--        Sets: 3
+--        Reps: 12-15
+--        Form: Lie face down on the floor with arms extended forward and legs straight. Simultaneously lift your arms, chest, and legs off the ground, squeezing your glutes and lower back. Hold for a brief moment, then slowly lower back down.
+--        Modification (Easier): Lift only arms/chest or only legs.
+--        Modification (Harder): Hold the top position for 2-3 seconds.
+-- 
+-- 4.  Leg Raises (Lower Abs)
+--        Sets: 3
+--        Reps: 12-15
+--        Form: Lie on your back, hands under your glutes for support or by your sides. Keep your legs straight (or slightly bent if needed), slowly lower them until they are just above the floor, then raise them back up. Keep your lower back pressed into the floor throughout.
+--        Modification (Easier): Bend your knees more (Bent-Knee Leg Raises).
+--        Modification (Harder): Flutter Kicks for 30-45 seconds.
+-- 
+-- ---
+-- 
+-- 4-Week Progression Plan
+-- 
+-- This plan focuses on increasing volume (more reps/sets) or intensity (harder variations, shorter rest) to continually challenge your muscles.
+-- 
+-- Week 1: Focus on Form & Consistency
+--    Goal: Master the proper form for each exercise.
+--    Action: Stick to the prescribed sets, reps, and rest times. If you can't reach the rep target with good form, use an easier modification. If you easily exceed the rep target, reduce rest slightly or control the tempo more strictly.
+-- 
+-- Week 2: Increase Volume/Challenge
+--    Goal: Increase total reps performed or decrease rest time.
+--    Action:
+--        For exercises where you hit the top of the rep range (e.g., 15 Push-ups), try to add 1-2 reps per set (e.g., 16-17 Push-ups).
+--        Alternatively, reduce your rest periods by 10-15 seconds (e.g., from 60s to 45-50s) while maintaining rep counts.
+--        For planks, try to hold for an additional 5-10 seconds per set.
+-- 
+-- Week 3: Introduce Harder Variations / Time Under Tension
+--    Goal: Increase the difficulty of exercises or slow down the movement for more muscle engagement.
+--    Action:
+--        For exercises you've mastered (e.g., Push-ups), move to a slightly harder variation (e.g., from regular Push-ups to Decline Push-ups).
+--        For exercises where you're comfortable, slow down the eccentric (lowering) phase to 3-4 seconds for more time under tension.
+--        Add a 1-2 second pause at the most difficult part of an exercise (e.g., bottom of a squat, top of an inverted row).
+-- 
+-- Week 4: Consolidate & Further Progression
+--    Goal: Combine increased volume with harder variations.
+--    Action:
+--        If you introduced harder variations last week, now aim to increase your reps within that harder variation.
+--        If you focused on time under tension, try to add 1-2 reps while maintaining the slow tempo.
+--        For core exercises, try an advanced variation or increase hold time/reps significantly.
+--        Consider adding an extra set for one exercise per workout (e.g., 4 sets of Push-ups instead of 3), if time allows and you feel strong.
+-- 
+-- ---
+-- 
+-- Safety Tips & Modifications
+-- 
+--    Listen to Your Body: If you feel sharp pain, stop the exercise immediately. Soreness is normal; pain is not.
+--    Form Over Speed: Always prioritize correct form over rushing through reps. Poor form can lead to injury and less effective muscle stimulation.
+--    Breathing: Exhale during the exertion (lifting/pushing) phase, and inhale during the relaxation (lowering) phase.
+--    Hydration: Drink plenty of water throughout the day, especially around your workouts.
+--    Warm-up is Crucial: Never skip the warm-up; it prepares your muscles and joints, reducing injury risk.
+--    Space & Equipment:
+--        Ensure you have enough clear space around you for all movements.
+--        For Inverted Rows, ensure your table is extremely sturdy and won't tip or slide.
+--        Consider investing in a yoga mat for comfort during floor exercises.
+-- •   Optional Equipment for Future: If you enjoy this and want to continue progressing, a set of resistance bands or adjustable dumbbells could significantly enhance your home workouts.
+-- 
+-- Remember, consistency and a focus on progressive overload are the keys to building muscle. Good luck!
+

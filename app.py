@@ -16,6 +16,7 @@ import subprocess
 sys.path.append(os.path.join(os.getcwd(), 'squats'))
 sys.path.append(os.path.join(os.getcwd(), 'pushups'))
 sys.path.append(os.path.join(os.getcwd(), 'plank'))
+
 sys.path.append(os.path.join(os.getcwd(), 'russian_twists'))
 sys.path.append(os.path.join(os.getcwd(), 'lunges'))
 
@@ -39,6 +40,116 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")
 
 class FitnessTrainerApp:
+    # 100 random motivational workout quotes
+    MOTIVATIONAL_QUOTES = [
+        "Push yourself, because no one else is going to do it for you.",
+        "Success starts with self-discipline.",
+        "The body achieves what the mind believes.",
+        "No pain, no gain. Shut up and train.",
+        "Don’t limit your challenges, challenge your limits.",
+        "The only bad workout is the one that didn’t happen.",
+        "Sweat is fat crying.",
+        "You don’t have to be extreme, just consistent.",
+        "Strive for progress, not perfection.",
+        "It never gets easier, you just get stronger.",
+        "If it doesn’t challenge you, it won’t change you.",
+        "Train insane or remain the same.",
+        "Wake up. Work out. Look hot. Kick ass.",
+        "The pain you feel today will be the strength you feel tomorrow.",
+        "Don’t wish for a good body, work for it.",
+        "You are your only limit.",
+        "Excuses don’t burn calories.",
+        "The hardest lift of all is lifting your butt off the couch.",
+        "You don’t have to go fast, you just have to go.",
+        "Fall in love with taking care of yourself.",
+        "A one hour workout is 4% of your day. No excuses.",
+        "Don’t stop when you’re tired. Stop when you’re done.",
+        "The difference between try and triumph is a little ‘umph’.",
+        "You are stronger than you think.",
+        "Fitness is not about being better than someone else. It’s about being better than you used to be.",
+        "The only way to finish is to start.",
+        "You don’t get the ass you want by sitting on it.",
+        "Don’t count the days, make the days count.",
+        "If you’re tired of starting over, stop giving up.",
+        "Your body can stand almost anything. It’s your mind that you have to convince.",
+        "The pain you feel today will be the strength you feel tomorrow.",
+        "Don’t let the scale define you. Be active, be healthy, be happy.",
+        "You miss 100% of the shots you don’t take.",
+        "The only bad workout is the one you didn’t do.",
+        "Don’t quit. Suffer now and live the rest of your life as a champion.",
+        "The difference between a successful person and others is not a lack of strength, not a lack of knowledge, but rather a lack in will.",
+        "Energy and persistence conquer all things.",
+        "The secret of getting ahead is getting started.",
+        "The only place where success comes before work is in the dictionary.",
+        "If you still look good at the end of your workout, you didn’t train hard enough.",
+        "Don’t be afraid of being a beginner.",
+        "You are one workout away from a good mood.",
+        "The best project you’ll ever work on is you.",
+        "Don’t wish for it, work for it.",
+        "You don’t have to be great to start, but you have to start to be great.",
+        "The only time success comes before work is in the dictionary.",
+        "If you want something you’ve never had, you must be willing to do something you’ve never done.",
+        "The difference between who you are and who you want to be is what you do.",
+        "Don’t let yesterday take up too much of today.",
+        "You don’t find willpower, you create it.",
+        "The only way to see results is to keep going.",
+        "You are capable of amazing things.",
+        "Don’t be afraid to fail. Be afraid not to try.",
+        "The only bad workout is the one you didn’t do.",
+        "You are your only competition.",
+        "The only thing standing between you and your goal is the story you keep telling yourself.",
+        "Don’t let fear hold you back.",
+        "You are stronger than your excuses.",
+        "The only way to do great work is to love what you  do.",
+        "Don’t stop until you’re proud.",
+        "You are what you do, not what you say you’ll do.",
+        "The only way to achieve the impossible is to believe it is possible.",
+        "Don’t let anyone work harder than you do.",
+        "You are the only one who can limit your greatness.",
+        "The only way to get better is to keep going.",
+        "Don’t let your dreams be dreams.",
+        "You are the architect of your own destiny.",
+        "The only way to do it is to do it.",
+        "Don’t let your mind bully your body.",
+        "You are the master of your fate.",
+        "The only way to win is to try.",
+        "Don’t let your fears decide your future.",
+        "You are the creator of your own happiness.",
+        "The only way to make progress is to take action.",
+        "Don’t let your past define your future.",
+        "You are the author of your own story.",
+        "The only way to reach your goals is to keep moving forward.",
+        "Don’t let your struggles become your identity.",
+        "You are the hero of your own journey.",
+        "The only way to succeed is to keep trying.",
+        "Don’t let your failures define you.",
+        "You are the champion of your own life.",
+        "The only way to be truly satisfied is to do what you believe is great work.",
+        "Don’t let your doubts stop you.",
+        "You are the driver of your own success.",
+        "The only way to find yourself is to lose yourself in the service of others.",
+        "Don’t let your circumstances control you.",
+        "You are the designer of your own future.",
+        "The only way to have a good day is to start it with a positive attitude.",
+        "Don’t let your weaknesses hold you back.",
+        "You are the builder of your own dreams.",
+        "The only way to do great work is to love what you do.",
+        "Don’t let your fears stop you from achieving your goals.",
+        "You are the captain of your own ship.",
+        "The only way to get what you want is to work for it.",
+        "Don’t let your excuses get in the way of your success.",
+        "You are the boss of your own life.",
+        "The only way to make your dreams come true is to wake up and work for them.",
+        "Don’t let your comfort zone become your prison.",
+        "You are the author of your own destiny.",
+        "The only way to achieve greatness is to believe in yourself."
+    ]
+    
+    def get_random_quote(self):
+        """Get a random motivational quote from the list"""
+        import random
+        return random.choice(self.MOTIVATIONAL_QUOTES)
+    
     def __init__(self):
         self.root = ctk.CTk()
         self.root.title("AI Fitness Trainer")
@@ -513,6 +624,11 @@ class FitnessTrainerApp:
         colors = exercise_config["colors"]
         feedback_messages = exercise_config["feedback_messages"]
         
+        # Motivational quote tracking variables
+        correct_form_start_time = None
+        last_motivational_time = 0
+        motivational_cooldown = 12  # seconds between motivational quotes
+        
         while self.is_evaluating:
             ret, frame = self.cap.read()
             if not ret:
@@ -593,10 +709,26 @@ class FitnessTrainerApp:
                 
                 # Speak feedback for incorrect forms with cooldown
                 current_time = time.time()
-                if pred_class != 'correct' and (current_time - self.last_feedback_time > self.feedback_cooldown or pred_class != self.last_pred_class):
-                    self.speak_feedback(feedback_messages[pred_class], feedback_messages)
-                    self.last_feedback_time = current_time
-                    self.last_pred_class = pred_class
+                if pred_class != 'correct':
+                    if (current_time - self.last_feedback_time > self.feedback_cooldown or pred_class != self.last_pred_class):
+                        self.speak_feedback(feedback_messages[pred_class], feedback_messages)
+                        self.last_feedback_time = current_time
+                        self.last_pred_class = pred_class
+                    # Reset correct form timer when form is incorrect
+                    correct_form_start_time = None
+                else:
+                    # Track correct form duration
+                    if correct_form_start_time is None:
+                        correct_form_start_time = current_time
+                    # If correct form for 10 seconds, speak motivational quote
+                    elif current_time - correct_form_start_time >= 10 and (current_time - last_motivational_time > motivational_cooldown):
+                        quote = self.get_random_quote()
+                        # Speak the motivational quote
+                        command = f'powershell -Command "Add-Type -AssemblyName System.Speech; (New-Object System.Speech.Synthesis.SpeechSynthesizer).Speak(\'{quote}\')"'
+                        Thread(target=lambda: os.system(command)).start()
+                        last_motivational_time = current_time
+                        # Reset timer so it continues after the quote
+                        correct_form_start_time = current_time
                 
                 # Draw frame count
                 cv2.putText(

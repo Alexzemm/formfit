@@ -4,15 +4,14 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Header from './Header.jsx'
 import LoginCard from './LoginCard.jsx'
-import LoginPage from './LoginPage.jsx'
-
 
 function App() {
   return(
       <>
-        <LoginPage />
+        <Header />
+        <LoginCard />
       </>
 
   )
 }
-export default App
+export default LoginPage

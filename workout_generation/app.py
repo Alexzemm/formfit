@@ -1,9 +1,4 @@
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_from_directory
-import subprocess
-import socket
-import sys
-import threading
-import time
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
 import google.generativeai as genai
 from datetime import datetime
 from typing import Dict, Any
@@ -11,15 +6,7 @@ import os
 import re
 import hashlib
 
-HERE = os.path.dirname(__file__)
-FRONTEND_DIR = os.path.normpath(os.path.join(HERE, '..', 'frontend'))
-FRONTEND_DIST = os.path.join(FRONTEND_DIR, 'dist')
-
-# If a production React build exists, serve it as Flask static files.
-if os.path.isdir(FRONTEND_DIST):
-    app = Flask(__name__, static_folder=FRONTEND_DIST, template_folder=FRONTEND_DIST)
-else:
-    app = Flask(__name__)
+app = Flask(__name__)
 app.secret_key = 'your-secret-key-here'  # Required for session management
 
 # Configure Gemini API
@@ -233,49 +220,6 @@ generator = FitnessPlanGenerator()
 
 @app.route('/')
 def index():
-    # If a production build exists, serve it so React handles routing
-    if os.path.isdir(FRONTEND_DIST):
-        return send_from_directory(FRONTEND_DIST, 'index.html')
-
-    # No production build — ensure dev server is running and redirect there
-    DEV_HOST = 'http://localhost'
-    DEV_PORT = 5173
-    DEV_URL = f"{DEV_HOST}:{DEV_PORT}/"
-
-    def is_port_open(host: str, port: int, timeout: float = 1.0) -> bool:
-        try:
-            with socket.create_connection((host, port), timeout=timeout):
-                return True
-        except Exception:
-            return False
-
-    def start_dev_server():
-        # Start `npm run dev` in frontend directory if it's not already running
-        if is_port_open('localhost', DEV_PORT):
-            return
-
-        npm_cmd = 'npm'
-        if sys.platform == 'win32':
-            npm_cmd = 'npm.cmd'
-
-        try:
-            # Spawn dev server detached so Flask can continue
-            subprocess.Popen([npm_cmd, 'run', 'dev'], cwd=FRONTEND_DIR, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, shell=False)
-        except Exception:
-            # best-effort: ignore failures here
-            pass
-
-    # Start dev server in a background thread (non-blocking)
-    t = threading.Thread(target=start_dev_server, daemon=True)
-    t.start()
-
-    # Wait briefly for dev server to start
-    for _ in range(15):
-        if is_port_open('localhost', DEV_PORT):
-            return redirect(DEV_URL)
-        time.sleep(0.5)
-
-    # If dev server didn't start in time, show the regular login template as fallback
     return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
